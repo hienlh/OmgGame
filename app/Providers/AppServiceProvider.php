@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace OmgGame\Providers;
 
 use Illuminate\Support\ServiceProvider;
 

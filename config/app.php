@@ -169,11 +169,11 @@ return [
         /*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
+        OmgGame\Providers\AppServiceProvider::class,
+        OmgGame\Providers\AuthServiceProvider::class,
+        // OmgGame\Providers\BroadcastServiceProvider::class,
+        OmgGame\Providers\EventServiceProvider::class,
+        OmgGame\Providers\RouteServiceProvider::class,
 
     ],
 

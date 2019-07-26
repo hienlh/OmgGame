@@ -11,6 +11,15 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
+    Route::resource('games', 'GamesController');
+    Route::get('game/{id}', 'GamesController@show');
+    Route::resource('gameUsers', 'GameUsersController');
+    Route::resource('gameResults', 'GameResultsController');
 });
