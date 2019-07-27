@@ -1,6 +1,6 @@
 <?php
 
-namespace OmgGame\Http\Controllers\Auth;
+namespace OmgGame\Http\Controllers\Admin\Auth;
 
 use OmgGame\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
@@ -25,7 +25,7 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/admin/dashboard';
 
     /**
      * Create a new controller instance.

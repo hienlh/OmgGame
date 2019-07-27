@@ -1,6 +1,6 @@
 <?php
 
-namespace OmgGame\Http\Controllers\Auth;
+namespace OmgGame\Http\Controllers\Admin\Auth;
 
 use OmgGame\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;

@@ -11,15 +11,20 @@
 |
 */
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin'], function () {
     Route::resource('games', 'GamesController');
-    Route::get('game/{id}', 'GamesController@show');
     Route::resource('gameUsers', 'GameUsersController');
     Route::resource('gameResults', 'GameResultsController');
+    Route::get('/dashboard', 'HomeController@index')->name('dashboard');
+});
+
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
+    Auth::routes();
 });

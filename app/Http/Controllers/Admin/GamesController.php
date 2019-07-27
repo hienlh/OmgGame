@@ -12,6 +12,17 @@ use OmgGame\Models\User;
 class GamesController extends Controller
 {
     /**
+     * GamesController constructor.
+     */
+    public function __construct()
+    {
+        $this->middleware('permission:create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:delete', ['only' => ['show', 'delete']]);
+        $this->middleware(['permission:create', 'permission:edit', 'permission:delete'], ['only' => 'index']);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return Response
