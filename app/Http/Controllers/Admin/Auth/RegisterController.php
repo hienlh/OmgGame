@@ -2,11 +2,11 @@
 
 namespace OmgGame\Http\Controllers\Admin\Auth;
 
-use OmgGame\User;
-use OmgGame\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Foundation\Auth\RegistersUsers;
+use OmgGame\Http\Controllers\Controller;
+use OmgGame\Models\User;
 
 class RegisterController extends Controller
 {
@@ -43,7 +43,7 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
@@ -58,8 +58,8 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
-     * @return \OmgGame\User
+     * @param array $data
+     * @return User
      */
     protected function create(array $data)
     {

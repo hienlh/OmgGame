@@ -2,6 +2,7 @@
 
 namespace OmgGame\Http\Controllers\Admin\Auth;
 
+use Illuminate\Http\Request;
 use OmgGame\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -20,12 +21,17 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
+    protected function authenticated(Request $request, $user)
+    {
+        return redirect()->route('dashboard');
+    }
+
     /**
      * Where to redirect users after login.
      *
      * @var string
      */
-    protected $redirectTo = '/admin/dashboard';
+//    protected $redirectTo = '/admin/dashboard';
 
     /**
      * Create a new controller instance.

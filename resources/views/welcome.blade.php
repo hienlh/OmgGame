@@ -81,13 +81,11 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    OMG GAME
                 </div>
 
                 <div class="links">
                     <a href="{{ route('dashboard')  }}">Dashboard</a>
-                    <a href="{{ route('login') }}">Login</a>
-                    <a href="{{ route('register') }}">Register</a>
                     <a href="{{ route('games.index') }}">Games</a>
                     <a href="{{ route('gameResults.index') }}">Game Results</a>
                     <a href="{{ route('gameUsers.index') }}">Game Users</a>
