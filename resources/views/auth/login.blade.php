@@ -1,72 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- Meta, title, CSS, favicons, etc. -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('auth.layout')
 
-    <title>Omg Game Admin Login</title>
-
-    <!-- Bootstrap -->
-    <link href="{{asset('admin/css/bootstrap.min.css')}}" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="{{asset('admin/css/font-awesome.min.css')}}" rel="stylesheet">
-    <!-- NProgress -->
-    <link href="{{asset('admin/css/nprogress.css')}}" rel="stylesheet">
-    <!-- Animate.css -->
-    <link href="{{asset('admin/css/animate.min.css')}}" rel="stylesheet">
-
-    <!-- Custom Theme Style -->
-    <link href="{{asset('admin/css/custom.min.css')}}" rel="stylesheet">
-</head>
-
-<body class="login">
-<div>
-    <div class="login_wrapper">
-        <div class="animate form login_form">
-            <section class="login_content">
-                <form role="form" method="POST" action="{{ route('login') }}">
-                    <h1>OmgGame | Login</h1>
-                    {{ csrf_field() }}
-                    <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                        @if ($errors->has('email'))
-                            <span class="help-block"><strong>{{ $errors->first('email') }}</strong></span>
-                        @endif
-                        <input type="text" class="form-control" id="email" name="email" placeholder="Email"/>
-                    </div>
-                    <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                        @if ($errors->has('password'))
-                            <span class="help-block"><strong>{{ $errors->first('password') }}</strong></span>
-                        @endif
-                        <input type="password" class="form-control" id="password" name="password"
-                               placeholder="Password"/>
-                    </div>
-                    <div>
-                        <button type="submit" class="btn btn-default submit">Login</button>
-                        <a class="reset_pass" href="{{route('password.reset', ['token' => null])}}">Lost your
-                            password?</a>
-                    </div>
-
-                    <div class="clearfix"></div>
-
-                    <div class="separator">
-
-                        <div class="clearfix"></div>
-                        <br/>
-
-                        <div>
-                            <h1><i class="fa fa-paw"></i> Larashop Admin Panel</h1>
-                            <p>©2017 All Rights Reserved. Brough to you by <a href="https://tutorials.kode-blog.com"
-                                                                              target="_blank">Kode Blog Tutorials</a>
-                            </p>
+@section('content')
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card-group">
+                    <div class="card p-4">
+                        <div class="card-body">
+                            <h1>Login</h1>
+                            <p class="text-muted">Sign In to your account</p>
+                            <form method="POST" action="{{ route('login') }}">
+                                {{ csrf_field() }}
+                                <div class="input-group mb-3">
+                                    <span class="input-group-addon"><i class="icon-user"></i></span>
+                                    <input type="text" name="email" value="{{ old('email') }}" class="form-control"
+                                           required
+                                           autofocus placeholder="email">
+                                </div>
+                                <div class="input-group mb-4">
+                                    <span class="input-group-addon"><i class="icon-lock"></i></span>
+                                    <input type="password" name="password" class="form-control" placeholder="Password"
+                                           required>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <button type="submit" class="btn btn-primary px-4">Login</button>
+                                    </div>
+                                    <div class="col-6 text-right">
+                                        <button type="button" class="btn btn-link px-0"
+                                                onclick="window.location.href = '{{ route('password.reset', ['token' => null]) }}';">
+                                            Forgot password?
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
-                </form>
-            </section>
+                    <div class="card text-white bg-primary py-5 d-md-down-none" style="width:44%">
+                        <div class="card-body text-center">
+                            <div>
+                                <h2>Sign up</h2>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                                    incididunt ut labore et dolore magna aliqua.</p>
+                                <a href="{{ route('register') }}" class="btn btn-primary active mt-3">Register Now!</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-</body>
-</html>
+@endsection

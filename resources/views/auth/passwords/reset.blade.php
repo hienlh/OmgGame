@@ -1,91 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- Meta, title, CSS, favicons, etc. -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('auth.layout')
 
-    <title>Larashop Admin | Password Reset</title>
+@section('content')
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card mx-4">
+                    <div class="card-body p-4">
+                        <h1>Reset Password</h1>
+                        <p class="text-muted">Create your new password</p>
+                        <form method="POST" action="{{ route('password.request') }}">
+                            {{ csrf_field() }}
+                            <input type="hidden" name="token" value="{{ $token }}">
+                            <div class="input-group{{ $errors->has('email') ? ' has-error' : '' }} mb-3">
+                                <span class="input-group-addon">@</span>
+                                <input id="email" type="email" class="form-control" name="email" placeholder="Email"
+                                       required autofocus>
+                            </div>
 
-    <!-- Bootstrap -->
-    <link href="{{asset('admin/css/bootstrap.min.css')}}" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="{{asset('admin/css/font-awesome.min.css')}}" rel="stylesheet">
-    <!-- NProgress -->
-    <link href="{{asset('admin/css/nprogress.css')}}" rel="stylesheet">
-    <!-- Animate.css -->
-    <link href="{{asset('admin/css/animate.min.css')}}" rel="stylesheet">
+                            <div class="input-group{{ $errors->has('password') ? ' has-error' : '' }} mb-3">
+                                <span class="input-group-addon"><i class="icon-lock"></i></span>
+                                <input id="password" type="password" class="form-control" name="password" required
+                                       placeholder="Password">
+                            </div>
 
-    <!-- Custom Theme Style -->
-    <link href="{{asset('admin/css/custom.min.css')}}" rel="stylesheet">
-</head>
+                            <div
+                                class="input-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }} mb-3">
+                                <span class="input-group-addon"><i class="icon-lock"></i></span>
+                                <input id="password-confirm" type="password" class="form-control"
+                                       name="password_confirmation" required placeholder="Confirm Password">
+                            </div>
 
-<body class="login">
-<div>
-    <a class="hiddenanchor" id="signup"></a>
-    <a class="hiddenanchor" id="lostpassword"></a>
-
-    <div class="login_wrapper">
-        <div class="animate form login_form">
-            <section class="login_content">
-                @if (session('status'))
-                    <div class="alert alert-success">
-                        {{ session('status') }}
+                            <button type="submit" class="btn btn-block btn-warning">Reset Password</button>
+                        </form>
                     </div>
-                @endif
-                <form role="form" method="POST" action="{{ route('password.reset', ['token' => '']) }}">
-                    <h3>Reset Password</h3>
-
-                    {{ csrf_field() }}
-
-                    <input type="hidden" name="token" value="{{ $token }}">
-
-                    <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                        @if ($errors->has('email'))
-                            <span class="help-block"><strong>{{ $errors->first('email') }}</strong></span>
-                        @endif
-                        <input type="text" class="form-control" id="email" name="email" placeholder="Email"/>
-                    </div>
-
-                    <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                        @if ($errors->has('password'))
-                            <span class="help-block"><strong>{{ $errors->first('password') }}</strong></span>
-                        @endif
-                        <input type="password" class="form-control" id="password" name="password"
-                               placeholder="Password"/>
-                    </div>
-
-                    <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                        @if ($errors->has('password_confirmation'))
-                            <span
-                                class="help-block"><strong>{{ $errors->first('password_confirmation') }}</strong></span>
-                        @endif
-                        <input type="password_confirmation" class="form-control" id="password_confirmation"
-                               name="password_confirmation" placeholder="Confirm Password"/>
-                    </div>
-
-                    <div>
-                        <button type="submit" class="btn btn-default submit">Reset Password</button>
-                    </div>
-
-                    <div class="clearfix"></div>
-
-                    <div class="separator">
-
-                        <div class="clearfix"></div>
-                        <br/>
-
-                        <div>
-                            <h1><i class="fa fa-paw"></i> Larashop Admin Panel</h1>
-                            <p>©2017 All Rights Reserved.</p>
+                    <div class="card-footer p-4">
+                        <div class="row">
+                            <div class="col-6">
+                                <button class="btn btn-block btn-dark" type="button"
+                                        onclick="window.location.href = '{{ route('login') }}';">
+                                    <span>Login</span>
+                                </button>
+                            </div>
+                            <div class="col-6">
+                                <button class="btn btn-block btn-info" type="button"
+                                        onclick="window.location.href = '{{ route('register') }}';">
+                                    <span>Register</span>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </form>
-            </section>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-</body>
-</html>
+@endsection

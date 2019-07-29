@@ -18,7 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'verified'], 'namespace' => 'Admin'], function () {
     Route::resource('games', 'GamesController');
     Route::resource('gameUsers', 'GameUsersController');
     Route::resource('gameResults', 'GameResultsController');
@@ -26,5 +26,5 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth', 'namespace' => 'Admin
 });
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
-    Auth::routes();
+    Auth::routes(['verify' => true]);
 });

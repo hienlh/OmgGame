@@ -43,7 +43,7 @@ class OmgGameAdminResetPassword extends Notification
     {
         return (new MailMessage)
             ->line('You are receiving this email because we received a password reset request for your account.')
-            ->action('Reset Password', route('password.reset.token', ['token' => $this->token]))
+            ->action('Reset Password', route('password.reset', ['token' => $this->token]))
             ->line('If you did not request a password reset, no further action is required.');
     }
 
