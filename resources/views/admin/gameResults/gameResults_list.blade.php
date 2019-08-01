@@ -33,9 +33,9 @@
                                 <td>Tiger Nixon</td>
                                 <td>System Architect</td>
                                 <td>
-                                    <a href="{{ route('brands.edit', ['id' => 1]) }}" class="btn btn-info btn-xs"><i
+                                    <a href="{{ route('gameResults.edit', ['id' => 1]) }}" class="btn btn-info btn-xs"><i
                                             class="fa fa-pencil" title="Edit"></i> </a>
-                                    <a href="{{ route('brands.show', ['id' => 1]) }}" class="btn btn-danger btn-xs"><i
+                                    <a href="{{ route('gameResults.show', ['id' => 1]) }}" class="btn btn-danger btn-xs"><i
                                             class="fa fa-trash-o" title="Delete"></i> </a>
                                 </td>
                             </tr>
@@ -43,9 +43,9 @@
                                 <td>Garrett Winters</td>
                                 <td>Accountant</td>
                                 <td>
-                                    <a href="{{ route('brands.edit', ['id' => 1]) }}" class="btn btn-info btn-xs"><i
+                                    <a href="{{ route('gameResults.edit', ['id' => 1]) }}" class="btn btn-info btn-xs"><i
                                             class="fa fa-pencil" title="Edit"></i> </a>
-                                    <a href="{{ route('brands.destroy', ['id' => 1]) }}"
+                                    <a href="{{ route('gameResults.destroy', ['id' => 1]) }}"
                                        class="btn btn-danger btn-xs"><i class="fa fa-trash-o" title="Delete"></i> </a>
                                 </td>
                             </tr>
@@ -53,9 +53,9 @@
                                 <td>Ashton Cox</td>
                                 <td>Junior Technical Author</td>
                                 <td>
-                                    <a href="{{ route('brands.edit', ['id' => 1]) }}" class="btn btn-info btn-xs"><i
+                                    <a href="{{ route('gameResults.edit', ['id' => 1]) }}" class="btn btn-info btn-xs"><i
                                             class="fa fa-pencil" title="Edit"></i> </a>
-                                    <a href="{{ route('brands.destroy', ['id' => 1]) }}"
+                                    <a href="{{ route('gameResults.destroy', ['id' => 1]) }}"
                                        class="btn btn-danger btn-xs"><i class="fa fa-trash-o" title="Delete"></i> </a>
                                 </td>
                             </tr>
@@ -63,9 +63,9 @@
                                 <td>Cedric Kelly</td>
                                 <td>Senior Javascript Developer</td>
                                 <td>
-                                    <a href="{{ route('brands.edit', ['id' => 1]) }}" class="btn btn-info btn-xs"><i
+                                    <a href="{{ route('gameResults.edit', ['id' => 1]) }}" class="btn btn-info btn-xs"><i
                                             class="fa fa-pencil" title="Edit"></i> </a>
-                                    <a href="{{ route('brands.destroy', ['id' => 1]) }}"
+                                    <a href="{{ route('gameResults.destroy', ['id' => 1]) }}"
                                        class="btn btn-danger btn-xs"><i class="fa fa-trash-o" title="Delete"></i> </a>
                                 </td>
                             </tr>

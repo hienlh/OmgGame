@@ -6,10 +6,10 @@
       </li>
 
       <li class="nav-title">
-        UI Elements
+        Management
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#"><i class="icon-calculator"></i> Samples</a>
+        <a class="nav-link" href="{{ route('games.index') }}"><i class="icon-calculator"></i> Games</a>
       </li>
     </ul>
   </nav>
