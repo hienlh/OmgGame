@@ -9,7 +9,6 @@ class GameUser extends Model
     protected $fillable = [
         'game_id',
         'name',
-        'email',
         'avatar',
         'last_play'
     ];

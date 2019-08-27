@@ -10,10 +10,9 @@ return [
     | This value is the name of your application. This value is used when the
     | framework needs to place the application's name in a notification or
     | any other location as required by the application or its packages.
-    |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Laravel 5 Labs64 Boilerplate'),
 
     /*
     |--------------------------------------------------------------------------
@@ -22,7 +21,7 @@ return [
     |
     | This value determines the "environment" your application is currently
     | running in. This may determine how you prefer to configure various
-    | services the application utilizes. Set this in your ".env" file.
+    | services your application utilizes. Set this in your ".env" file.
     |
     */
 
@@ -40,6 +39,7 @@ return [
     */
 
     'debug' => env('APP_DEBUG', false),
+    'debug_emails' => env('APP_DEBUG_EMAILS', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -53,8 +53,6 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost'),
-
-    'asset_url' => env('ASSET_URL', null),
 
     /*
     |--------------------------------------------------------------------------
@@ -80,7 +78,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => env('APP_LOCALE', 'en'),
 
     /*
     |--------------------------------------------------------------------------
@@ -93,20 +91,19 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => env('APP_FALLBACK_LOCALE', 'en'),
 
     /*
     |--------------------------------------------------------------------------
-    | Faker Locale
+    | Additional Locales
     |--------------------------------------------------------------------------
     |
-    | This locale will be used by the Faker PHP library when generating fake
-    | data for your database seeds. For example, this will be used to get
-    | localized telephone numbers, street address information and more.
+    | The list of additional allowed locales is used when choosing a better locale for the user, adds multilanguage.
+    | Enter the locales separating them with a comma.
     |
     */
 
-    'faker_locale' => 'en_US',
+    'locales' => env('APP_LOCALES'),
 
     /*
     |--------------------------------------------------------------------------
@@ -161,11 +158,17 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        Zizaco\Entrust\EntrustServiceProvider::class,
 
         /*
          * Package Service Providers...
          */
+        Laravel\Tinker\TinkerServiceProvider::class,
+        Arcanedev\LogViewer\LogViewerServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
+        Creativeorange\Gravatar\GravatarServiceProvider::class,
+        DaveJamesMiller\Breadcrumbs\BreadcrumbsServiceProvider::class,
+        Laravel\Socialite\SocialiteServiceProvider::class,
+        AlbertCht\InvisibleReCaptcha\InvisibleReCaptchaServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -175,6 +178,10 @@ return [
         // OmgGame\Providers\BroadcastServiceProvider::class,
         OmgGame\Providers\EventServiceProvider::class,
         OmgGame\Providers\RouteServiceProvider::class,
+        \OmgGame\Providers\ToJsServiceProvider::class,
+        \OmgGame\Providers\MetaServiceProvider::class,
+        Kyslik\ColumnSortable\ColumnSortableServiceProvider::class,
+        \OmgGame\Providers\ProtectionProvider::class
 
     ],
 
@@ -192,7 +199,6 @@ return [
     'aliases' => [
 
         'App' => Illuminate\Support\Facades\App::class,
-        'Arr' => Illuminate\Support\Arr::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
         'Auth' => Illuminate\Support\Facades\Auth::class,
         'Blade' => Illuminate\Support\Facades\Blade::class,
@@ -222,11 +228,20 @@ return [
         'Schema' => Illuminate\Support\Facades\Schema::class,
         'Session' => Illuminate\Support\Facades\Session::class,
         'Storage' => Illuminate\Support\Facades\Storage::class,
-        'Str' => Illuminate\Support\Str::class,
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Entrust' => Zizaco\Entrust\EntrustFacade::class,
+
+        /*
+        * Third Party Aliases
+        */
+        'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class,
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
+        'Gravatar' => Creativeorange\Gravatar\Facades\Gravatar::class,
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+        'ToJs' => \App\Helpers\ToJs\Facades\ToJsFacade::class,
+        'Meta' => \App\Helpers\Meta\Facades\MetaFacade::class
 
     ],
 
