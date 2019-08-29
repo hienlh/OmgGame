@@ -24,7 +24,7 @@ class CreateGamesTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
-        Schema::create('games', function (Blueprint $table) {
+        Schema::table('games', function (Blueprint $table) {
             $table->foreign('user_id')->references('id')->on('users');
         });
     }
