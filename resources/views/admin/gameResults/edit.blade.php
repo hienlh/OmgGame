@@ -184,7 +184,7 @@
 
                             layer.draw();
                         };
-                        avaImgObj.src = '{{ asset('assets/admin/images/default-avatar.png') }}';
+                        avaImgObj.src = '{{ asset('admin/images/user.png') }}';
                     }
 
                     function createText() {

@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class GameResult extends Model
 {
+    use SoftDeletes;
+
     protected $dates = ['delete_at'];
 
     protected $fillable = [

@@ -1,93 +1,72 @@
-@extends('auth.layouts.auth')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-@section('body_class','login')
+    <title>OmgGame Admin Login</title>
 
-@section('content')
-    <div>
-        <div class="login_wrapper">
-            <div class="animate form login_form">
-                <section class="login_content">
-                    {{ Form::open(['route' => 'login']) }}
-                        <h1>{{ __('views.auth.login.header') }}</h1>
+    <!-- Bootstrap -->
+    <link href="{{asset('admin/css/bootstrap.min.css')}}" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="{{asset('admin/css/font-awesome.min.css')}}" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="{{asset('admin/css/nprogress.css')}}" rel="stylesheet">
+    <!-- Animate.css -->
+    <link href="{{asset('admin/css/animate.min.css')}}" rel="stylesheet">
 
-                        <div>
-                            <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}"
-                                   placeholder="{{ __('views.auth.login.input_0') }}" required autofocus>
-                        </div>
-                        <div>
-                            <input id="password" type="password" class="form-control" name="password"
-                                   placeholder="{{ __('views.auth.login.input_1') }}" required>
-                        </div>
-                        <div class="checkbox al_left">
-                            <label>
-                                <input type="checkbox"
-                                       name="remember" {{ old('remember') ? 'checked' : '' }}> {{ __('views.auth.login.input_2') }}
-                            </label>
-                        </div>
+    <!-- Custom Theme Style -->
+    <link href="{{asset('admin/css/custom.min.css')}}" rel="stylesheet">
+</head>
 
-                        @if (session('status'))
-                            <div class="alert alert-success">
-                                {{ session('status') }}
-                            </div>
+<body class="login">
+<div>
+    <div class="login_wrapper">
+        <div class="animate form login_form">
+            <section class="login_content">
+                <form role="form" method="POST" action="{{ route('login') }}">
+                    <h1>OmgGame | Login</h1>
+                    {{ csrf_field() }}
+                    <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                        @if ($errors->has('email'))
+                            <span class="help-block"><strong>{{ $errors->first('email') }}</strong></span>
                         @endif
-
-                        @if (!$errors->isEmpty())
-                            <div class="alert alert-danger" role="alert">
-                                {!! $errors->first() !!}
-                            </div>
+                        <input type="text" class="form-control" id="email" name="email" placeholder="Email"/>
+                    </div>
+                    <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                        @if ($errors->has('password'))
+                            <span class="help-block"><strong>{{ $errors->first('password') }}</strong></span>
                         @endif
+                        <input type="password" class="form-control" id="password" name="password"
+                               placeholder="Password"/>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-default submit">Login</button>
+                        <a class="reset_pass" href="{{route('password.reset', ['token' => null])}}">Lost your
+                            password?</a>
+                    </div>
 
-                        <div>
-                            <button class="btn btn-default submit" type="submit">{{ __('views.auth.login.action_0') }}</button>
-                            <a class="reset_pass" href="{{ route('password.request') }}">
-                                {{ __('views.auth.login.action_1') }}
-                            </a>
-                        </div>
+                    <div class="clearfix"></div>
+
+                    <div class="separator">
 
                         <div class="clearfix"></div>
+                        <br/>
 
-                        <div class="separator">
-                            <span>{{ __('views.auth.login.message_0') }}</span>
-                            <div>
-                                <a href="{{ route('social.redirect', ['google']) }}" class="btn btn-success btn-google-plus">
-                                    <i class="fa fa-google-plus"></i>
-                                    Google+
-                                </a>
-                                <a href="{{ route('social.redirect', ['facebook']) }}" class="btn btn-success btn-facebook">
-                                    <i class="fa fa-facebook"></i>
-                                    Facebook
-                                </a>
-                                <a href="{{ route('social.redirect', ['twitter']) }}" class="btn btn-success btn-twitter">
-                                    <i class="fa fa-twitter"></i>
-                                    Twitter
-                                </a>
-                            </div>
+                        <div>
+                            <h1><i class="fa fa-paw"></i> Larashop Admin Panel</h1>
+                            <p>©2017 All Rights Reserved. Brough to you by <a href="https://tutorials.kode-blog.com"
+                                                                              target="_blank">Kode Blog Tutorials</a>
+                            </p>
                         </div>
-
-                        @if(config('auth.users.registration'))
-                            <div class="separator">
-                                <p class="change_link">{{ __('views.auth.login.message_1') }}
-                                    <a href="{{ route('register') }}" class="to_register"> {{ __('views.auth.login.action_2') }} </a>
-                                </p>
-
-                                <div class="clearfix"></div>
-                                <br/>
-
-                                <div>
-                                    <div class="h1">{{ config('app.name') }}</div>
-                                    <p>&copy; {{ date('Y') }} {{ config('app.name') }}. {{ __('views.auth.login.copyright') }}</p>
-                                </div>
-                            </div>
-                        @endif
-                    {{ Form::close() }}
-                </section>
-            </div>
+                    </div>
+                </form>
+            </section>
         </div>
     </div>
-@endsection
-
-@section('styles')
-    @parent
-
-    {{ Html::style(mix('assets/auth/css/login.css')) }}
-@endsection
+</div>
+</body>
+</html>

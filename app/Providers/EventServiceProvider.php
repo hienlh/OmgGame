@@ -2,18 +2,9 @@
 
 namespace OmgGame\Providers;
 
-use OmgGame\Events\Auth\SocialLogin;
-use OmgGame\Listeners\Auth\LoginListener;
-use OmgGame\Listeners\Auth\LogoutListener;
-use OmgGame\Listeners\Auth\LogVerifiedUser;
-use OmgGame\Listeners\Auth\RegisteredListener;
-use OmgGame\Listeners\Auth\SocialLoginListener;
-use Illuminate\Auth\Events\Login;
-use Illuminate\Auth\Events\Logout;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Auth\Events\Verified;
-use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
@@ -24,11 +15,9 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        Login::class => [LoginListener::class],
-        Logout::class => [LogoutListener::class],
-        Registered::class => [RegisteredListener::class, SendEmailVerificationNotification::class],
-        SocialLogin::class => [SocialLoginListener::class],
-        Verified:: class => [LogVerifiedUser::class],
+        Registered::class => [
+            SendEmailVerificationNotification::class,
+        ],
     ];
 
     /**

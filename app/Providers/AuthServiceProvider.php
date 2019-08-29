@@ -2,11 +2,9 @@
 
 namespace OmgGame\Providers;
 
-use OmgGame\Models\Auth\User\User;
-use OmgGame\Policies\Backend\BackendPolicy;
-use OmgGame\Policies\Models\User\UserPolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Schema;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -16,14 +14,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        /**
-         * Models Policies
-         */
-        User::class => UserPolicy::class,
-        /**
-         * Without models policies
-         */
-        'backend' => BackendPolicy::class
+        // 'OmgGame\Model' => 'OmgGame\Policies\ModelPolicy',
     ];
 
     /**
@@ -34,7 +25,7 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
+        Schema::defaultStringLength(191);
         //
     }
 }

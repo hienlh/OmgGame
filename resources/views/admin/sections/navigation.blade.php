@@ -11,7 +11,8 @@
         <!-- menu profile quick info -->
         <div class="profile clearfix">
             <div class="profile_pic">
-                <img src="{{ auth()->user()->avatar }}" alt="..." class="img-circle profile_img">
+                <img src="{{ auth()->user()->getAvatarUrl() }}" alt="auth()->user()->name"
+                     class="img-circle profile_img">
             </div>
             <div class="profile_info">
                 <h2>{{ auth()->user()->name }}</h2>
@@ -37,57 +38,55 @@
             <div class="menu_section">
                 <h3>{{ __('views.backend.section.navigation.sub_header_1') }}</h3>
                 <ul class="nav side-menu">
+                    @permission('games')
+                    <li>
+                        <a href="{{ route('admin.all-games.index') }}">
+                            <i class="fa fa-gamepad" aria-hidden="true"></i>
+                            {{ __('views.backend.section.navigation.all_games') }}
+                        </a>
+                    </li>
+                    @endpermission
+                    @permission('customer')
                     <li>
                         <a href="{{ route('admin.games.index') }}">
                             <i class="fa fa-gamepad" aria-hidden="true"></i>
                             {{ __('views.backend.section.navigation.games') }}
                         </a>
                     </li>
-                    <li>
-                        <a href="{{ route('admin.users') }}">
-                            <i class="fa fa-users" aria-hidden="true"></i>
-                            {{ __('views.backend.section.navigation.menu_1_1') }}
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('admin.users.restore') }}">
-                            <i class="fa fa-users" aria-hidden="true"></i>
-                            {{ __('views.backend.section.navigation.menu_1_3') }}
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('admin.permissions') }}">
-                            <i class="fa fa-key" aria-hidden="true"></i>
-                            {{ __('views.backend.section.navigation.menu_1_2') }}
-                        </a>
-                    </li>
+                    @endpermission
                 </ul>
             </div>
+            @permission(['roles','permissions','users'])
             <div class="menu_section">
                 <h3>{{ __('views.backend.section.navigation.sub_header_2') }}</h3>
-
                 <ul class="nav side-menu">
+                    @permission('users')
                     <li>
-                        <a>
-                            <i class="fa fa-list"></i>
-                            {{ __('views.backend.section.navigation.menu_2_1') }}
-                            <span class="fa fa-chevron-down"></span>
+                        <a href="{{ route('admin.users.index') }}">
+                            <i class="fa fa-edit" aria-hidden="true"></i>
+                            {{ __('views.backend.section.navigation.users') }}
                         </a>
-                        <ul class="nav child_menu">
-                            <li>
-                                <a href="{{ route('log-viewer::dashboard') }}">
-                                    {{ __('views.backend.section.navigation.menu_2_2') }}
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('log-viewer::logs.list') }}">
-                                    {{ __('views.backend.section.navigation.menu_2_3') }}
-                                </a>
-                            </li>
-                        </ul>
                     </li>
+                    @endpermission
+                    @permission('roles')
+                    <li>
+                        <a href="{{ route('admin.roles.index') }}">
+                            <i class="fa fa-edit" aria-hidden="true"></i>
+                            {{ __('views.backend.section.navigation.roles') }}
+                        </a>
+                    </li>
+                    @endpermission
+                    @permission('permissions')
+                    <li>
+                        <a href="{{ route('admin.permissions.index') }}">
+                            <i class="fa fa-edit" aria-hidden="true"></i>
+                            {{ __('views.backend.section.navigation.permissions') }}
+                        </a>
+                    </li>
+                    @endpermission
                 </ul>
             </div>
+            @endpermission
         </div>
         <!-- /sidebar menu -->
     </div>
