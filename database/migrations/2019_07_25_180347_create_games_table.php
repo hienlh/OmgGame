@@ -23,7 +23,8 @@ class CreateGamesTable extends Migration
             $table->longText('image');
             $table->timestamps();
             $table->softDeletes();
-
+        });
+        Schema::create('games', function (Blueprint $table) {
             $table->foreign('user_id')->references('id')->on('users');
         });
     }
