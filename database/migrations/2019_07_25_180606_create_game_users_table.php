@@ -15,7 +15,7 @@ class CreateGameUsersTable extends Migration
     {
         Schema::create('game_users', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('game_id')->unsigned()->index();
+            $table->bigInteger('game_id')->unsigned()->index();
             $table->string('name')->nullable();
             $table->longText('avatar')->nullable();
             $table->dateTime('last_play');

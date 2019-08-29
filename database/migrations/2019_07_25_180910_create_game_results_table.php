@@ -15,7 +15,7 @@ class CreateGameResultsTable extends Migration
     {
         Schema::create('game_results', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('game_id')->unsigned()->index();
+            $table->bigInteger('game_id')->unsigned()->index();
             $table->longText('image');
             $table->longText('description');
             $table->longText('design');
