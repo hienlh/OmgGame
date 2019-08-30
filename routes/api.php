@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use OmgGame\Models\Game;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +18,7 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/users/{user_id}/games', 'ApiController@getGames');
+Route::get('/games/{game_id}/results', 'ApiController@getResults');
+Route::get('/games/{game_id}/result', 'ApiController@getResult');

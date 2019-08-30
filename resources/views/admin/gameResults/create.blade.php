@@ -324,7 +324,7 @@
                     function saveToImage() {
                         removeSelection();
                         const dataURL = stage.toDataURL({pixelRatio: 1});
-                        downloadURI(dataURL, 'stage.png');
+                        downloadURI(dataURL, 'result.png');
                     }
 
                     function toJson() {
