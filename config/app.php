@@ -170,6 +170,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Zizaco\Entrust\EntrustServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+        Barryvdh\Cors\ServiceProvider::class,
 
         /*
          * Package Service Providers...
