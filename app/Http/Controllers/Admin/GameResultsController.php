@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
+use OmgGame\Helpers\Firebase\FirebaseHelper;
 use OmgGame\Http\Controllers\Controller;
 use OmgGame\Models\Game;
 use OmgGame\Models\GameResult;
@@ -62,13 +63,9 @@ class GameResultsController extends Controller
                 ->withFlashDanger('The game result image background is required.');
         }
 
-
-        $image_file = $request->imageBackground;
-        $new_name = time() . rand() . '.' . $image_file->getClientOriginalExtension();
-        $image_file->move(public_path("images/upload"), $new_name);
         $result = GameResult::create([
             'game_id' => $game_id,
-            'image' => 'images/upload/' . $new_name,
+            'image' => FirebaseHelper::getInstance()->upload($request->imageBackground, 'results'),
             'description' => $request->input('description'),
             'design' => $request->input('design') ?? "",
         ]);
@@ -138,18 +135,19 @@ class GameResultsController extends Controller
             'imageBackground' => 'image|mimes:jpeg,png,jpg|max:2048'
         ]);
 
-        $image_file = $request->imageBackground;
-        $new_name = null;
-        if ($image_file) {
-            $new_name = time() . rand() . '.' . $image_file->getClientOriginalExtension();
-            $image_file->move(public_path("images/upload"), $new_name);
-            Storage::delete($result->image);
-        }
+        $image_file = $request->image;
+        $old_image = $result->image;
+
         $result->game_id = $game_id;
-        $new_name ? $result->image = 'images/upload/' . $new_name : null;
+        if($image_file) $result->image = FirebaseHelper::getInstance()->upload($image_file, 'results');
         $result->description = $request->input('description');
         $result->design = $request->input('design') ?? "";
         $result->save();
+
+        if ($image_file && $old_image && $old_image != $result->image) {
+            FirebaseHelper::getInstance()->delete($old_image);
+        }
+
         return redirect()->route('admin.gameResults.index', [$game_id])->withFlashSuccess("The result has successfully been updated.");
     }
 

@@ -24,7 +24,7 @@ Route::get('/home', function () {
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth', 'namespace' => 'Admin'], function () {
     Route::resource('games', 'GamesController');
-    Route::resource('all-games', 'AllGamesController');
+    Route::get('all-games', 'AllGamesController@index')->name('all-games.index');
     Route::resource('users', 'UsersController');
     Route::resource('roles', 'RolesController');
     Route::resource('permissions', 'PermissionsController');
