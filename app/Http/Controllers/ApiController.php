@@ -14,31 +14,19 @@ class ApiController extends Controller
         return Game::all()
             ->where('user_id', $user_id)
             ->where('is_active', 1)
-            ->where('delete_at', null)
-            ->map(function ($item) {
-                $item->image = \url('/') . '/' . $item->image;
-                return $item;
-            });
+            ->where('delete_at', null);
     }
 
     public function getResults(Request $request, $game_id) {
         return GameResult::all()
             ->where('game_id', $game_id)
-            ->where('delete_at', null)
-            ->map(function ($item) {
-                $item->image = \url('/') . '/' . $item->image;
-                return $item;
-            });
+            ->where('delete_at', null);
     }
 
     public function getResult(Request $request, $game_id) {
         $result = GameResult::all()
             ->where('game_id', $game_id)
-            ->where('delete_at', null)
-            ->map(function ($item) {
-                $item->image = \url('/') . '/' . $item->image;
-                return $item;
-            })->toArray();
+            ->where('delete_at', null);
         return $result[array_rand($result)];
     }
 }
