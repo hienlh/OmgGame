@@ -26,7 +26,7 @@ class ApiController extends Controller
     public function getResult(Request $request, $game_id) {
         $result = GameResult::all()
             ->where('game_id', $game_id)
-            ->where('delete_at', null);
+            ->where('delete_at', null)->toArray();
         return $result[array_rand($result)];
     }
 }
