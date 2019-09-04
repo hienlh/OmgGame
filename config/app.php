@@ -171,6 +171,7 @@ return [
         Zizaco\Entrust\EntrustServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -243,7 +244,8 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
         'Gravatar' => Gravatar::class,
         'ToJs' => ToJsFacade::class,
-        'Meta' => MetaFacade::class
+        'Meta' => MetaFacade::class,
+        'Image' => Intervention\Image\Facades\Image::class
 
     ],
 

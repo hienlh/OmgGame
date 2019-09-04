@@ -135,7 +135,7 @@ class GameResultsController extends Controller
             'imageBackground' => 'image|mimes:jpeg,png,jpg|max:2048'
         ]);
 
-        $image_file = $request->image;
+        $image_file = $request->imageBackground;
         $old_image = $result->image;
 
         $result->game_id = $game_id;
