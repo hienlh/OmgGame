@@ -81,7 +81,7 @@ class ApiController extends Controller
                 });
         }
 
-        return $image->response();
+        return $image->encode('data-url');
 //        return public_path('admin/fonts/arial.ttf');
     }
 
