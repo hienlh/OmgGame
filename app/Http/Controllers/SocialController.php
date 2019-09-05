@@ -7,7 +7,8 @@ use Laravel\Socialite\Facades\Socialite;
 
 class SocialController extends Controller
 {
-    public function redirect($provider) {
+    public function redirect($provider)
+    {
         return Socialite::driver($provider)->fields([
             'first_name', 'last_name', 'email', 'gender', 'birthday'
         ])->scopes([
@@ -15,8 +16,11 @@ class SocialController extends Controller
         ])->redirect();
     }
 
-    public function callback($provider) {
-        $getInfo = Socialite::driver($provider)->user();
-        return redirect()->route('/home');
+    public function callback($provider)
+    {
+        $getInfo = Socialite::driver($provider)->fields([
+            'first_name', 'last_name', 'email', 'gender', 'birthday'
+        ])->user();
+        return redirect()->to('/?info=' . json_encode($getInfo));
     }
 }
