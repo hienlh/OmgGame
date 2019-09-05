@@ -9,11 +9,7 @@ class SocialController extends Controller
 {
     public function redirect($provider)
     {
-        return Socialite::driver($provider)->fields([
-            'first_name', 'last_name', 'email', 'gender', 'birthday'
-        ])->scopes([
-            'email', 'user_birthday'
-        ])->redirect();
+        return redirect()->to('https://loginsuccess');
     }
 
     public function callback($provider)
@@ -22,6 +18,6 @@ class SocialController extends Controller
             'first_name', 'last_name', 'email', 'gender', 'birthday'
         ])->user();
         // return redirect()->to('/?info=' . json_encode($getInfo));
-        return redirect()->to('omggame://loginsuccess');
+        return redirect()->to('https://loginsuccess');
     }
 }
