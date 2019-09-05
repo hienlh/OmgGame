@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if (app()->environment('remote')) {
+        if (app()->environment('remote') || env('FORCE_HTTPS')) {
             URL::forceScheme('https');
         }
     }
