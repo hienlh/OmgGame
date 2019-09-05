@@ -13,7 +13,7 @@
             src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v4.0&appId=652516575208870&autoLogAppEvents=1"></script>
     <div class="fb-login-button" data-width="" data-size="large"
          data-button-type="continue_with"
-         data-auto-logout-link="false" data-use-continue-as="false"></div>
+         data-auto-logout-link="false" data-use-continue-as="true"></div>
 </div>
 <style>
     .wrapper {
