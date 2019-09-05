@@ -21,6 +21,7 @@ class SocialController extends Controller
         $getInfo = Socialite::driver($provider)->fields([
             'first_name', 'last_name', 'email', 'gender', 'birthday'
         ])->user();
-        return redirect()->to('/?info=' . json_encode($getInfo));
+        // return redirect()->to('/?info=' . json_encode($getInfo));
+        return redirect()->to('omggame://loginsuccess');
     }
 }
