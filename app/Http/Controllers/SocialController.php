@@ -9,7 +9,11 @@ class SocialController extends Controller
 {
     public function redirect($provider)
     {
-        return redirect()->to('https://loginsuccess');
+        return Socialite::driver($provider)->fields([
+            'first_name', 'last_name', 'email', 'gender', 'birthday'
+        ])->scopes([
+            'email', 'user_birthday'
+        ])->redirect();
     }
 
     public function callback($provider)
