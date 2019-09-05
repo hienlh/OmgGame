@@ -22,6 +22,6 @@ class SocialController extends Controller
             'first_name', 'last_name', 'email', 'gender', 'birthday'
         ])->user();
         // return redirect()->to('/?info=' . json_encode($getInfo));
-        return redirect()->to('https://loginsuccess');
+        return view('fb_login_success');
     }
 }
