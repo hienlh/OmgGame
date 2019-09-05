@@ -46,11 +46,6 @@
         width: 100%;
         height: 100%;
     }
-
-    .fb-login-button {
-        position: absolute;
-        top: 45%;
-    }
     .click-div {
         position: absolute;
         top: 0;
