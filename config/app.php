@@ -2,6 +2,8 @@
 
 use Creativeorange\Gravatar\Facades\Gravatar;
 use Creativeorange\Gravatar\GravatarServiceProvider;
+use Laravel\Socialite\Facades\Socialite;
+use Laravel\Socialite\SocialiteServiceProvider;
 use OmgGame\Helpers\Meta\Facades\MetaFacade;
 use OmgGame\Helpers\ToJs\Facades\ToJsFacade;
 use OmgGame\Providers\MetaServiceProvider;
@@ -172,6 +174,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        SocialiteServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -245,7 +248,8 @@ return [
         'Gravatar' => Gravatar::class,
         'ToJs' => ToJsFacade::class,
         'Meta' => MetaFacade::class,
-        'Image' => Intervention\Image\Facades\Image::class
+        'Image' => Intervention\Image\Facades\Image::class,
+        'Socialite' => Socialite::class
 
     ],
 

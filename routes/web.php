@@ -21,6 +21,8 @@ Route::get('/', function () {
 Route::get('/fb-login', function () {
     return view('fb_login');
 });
+Route::get('/auth/redirect/{provider}', 'SocialController@redirect');
+Route::get('/callback/{provider}', 'SocialController@callback');
 
 Route::get('/home', function () {
     return view('welcome');

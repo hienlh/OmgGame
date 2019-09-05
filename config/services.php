@@ -44,4 +44,10 @@ return [
         ],
     ],
 
+    'facebook' => [
+        'client_id' => '652516575208870',
+        'client_secret' => '0755cb2583968699cbeaeb8d8018c9af',
+        'redirect' => '/callback/facebook',
+    ],
+
 ];
