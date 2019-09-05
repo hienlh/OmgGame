@@ -18,6 +18,10 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
+Route::get('/fb-login', function () {
+    return view('fb_login');
+});
+
 Route::get('/home', function () {
     return view('welcome');
 });
