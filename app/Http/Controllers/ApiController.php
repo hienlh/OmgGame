@@ -33,7 +33,7 @@ class ApiController extends Controller
             ->where('delete_at', null);
         $index = array_rand($result->toArray());
         $image_url = $result[$index]->image;
-         $client= new Client();
+        $client= new Client();
         try {
             return $client->post('https://omg-support-server.herokuapp.com', [
                 'form_params' => [

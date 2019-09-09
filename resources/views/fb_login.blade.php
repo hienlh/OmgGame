@@ -31,7 +31,7 @@
     wrapper.onclick = click;
 
     function click() {
-        window.open("{{ url('/auth/redirect/facebook') }}","_self");
+        window.open("{{ url('/auth/redirect/facebook/' . $id) }}","_self");
     }
 </script>
 <style>

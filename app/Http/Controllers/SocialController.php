@@ -2,13 +2,15 @@
 
 namespace OmgGame\Http\Controllers;
 
-use Illuminate\Http\Request;
+use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Session;
 use Laravel\Socialite\Facades\Socialite;
 
 class SocialController extends Controller
 {
-    public function redirect($provider)
+    public function redirect($provider, $id)
     {
+        Session::put('userfbid', $id);
         return Socialite::driver($provider)->fields([
             'first_name', 'last_name', 'email', 'gender', 'birthday'
         ])->scopes([
@@ -21,7 +23,15 @@ class SocialController extends Controller
         $getInfo = Socialite::driver($provider)->fields([
             'first_name', 'last_name', 'email', 'gender', 'birthday'
         ])->user();
-        // return redirect()->to('/?info=' . json_encode($getInfo));
+        try {
+            $client= new Client();
+            $client->post('http://omg-support-server.herokuapp.com/login-success', [
+                'form_params' => [
+                    'id' => Session::get('userfbid')
+                ]
+            ]);
+        } catch (GuzzleException $e) {
+        }
         return view('fb_login_success');
     }
 }
