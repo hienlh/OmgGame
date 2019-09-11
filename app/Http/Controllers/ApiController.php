@@ -60,7 +60,7 @@ class ApiController extends Controller
             $game_user->last_play = Carbon::now();
             $game_user->save();
             $game_user = GameUser::find($request->id);
-            if(!$game_user->games->contains([$request->id, $game_id]))
+            if(!$game_user->games->contains($game_id))
                 $game_user->games()->attach($game_id);
         } else {
             parent::report('Miss information');
