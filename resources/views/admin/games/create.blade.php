@@ -32,18 +32,6 @@
             </div>
 
             <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">{{ __('views.admin.games.create.is_active') }}</label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <div class="">
-                        <label>
-                            <input type="checkbox" class="flat" value="is_active"
-                                   name="is_active"/> {{ __('views.admin.games.create.is_active') }}
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="question">
                     {{ __('views.admin.games.create.question') }}
                     <span class="required">*</span>

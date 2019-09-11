@@ -20,6 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/users/{user_id}/games', 'ApiController@getGames');
+Route::post('/users/{user_id}/games', 'ApiController@getGamesWithUser');
 Route::get('/games/{game_id}/results', 'ApiController@getResults');
 Route::post('/games/{game_id}/result', 'ApiController@getResult');
 Route::get('/test', 'ApiController@test');

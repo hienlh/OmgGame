@@ -5,6 +5,7 @@ namespace OmgGame\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Validation\ValidationException;
 use OmgGame\Helpers\Firebase\FirebaseHelper;
 use OmgGame\Http\Controllers\Controller;
@@ -62,7 +63,7 @@ class GamesController extends Controller
         ]);
         $user = Auth::user();
         $game = Game::create([
-            'is_active' => $request->input('is_active') ? true : false,
+            'is_active' => false,
             'user_id' => $user->id,
             'name' => $request->input('name'),
             'question' => $request->input('question'),
@@ -115,7 +116,11 @@ class GamesController extends Controller
         $game = Game::find($id);
 
         if (!$game) {
-            return redirect()->back()->withFlashDanger('The game you requested for has not been found');
+            return redirect()->back()->withInput($request->input())->with('flash_warning', 'The game you requested for has not been found');
+        }
+
+        if (count($game->results) <= 0 && $request->input('is_active')) {
+            return redirect()->back()->withInput($request->input())->with('flash_warning', 'Only active game have at least one result.');
         }
 
         $this->validate($request, [
@@ -126,7 +131,7 @@ class GamesController extends Controller
         if (!$request->hasFile('imageBackground') && !$game->image) {
             return redirect()
                 ->back()
-                ->withFlashDanger('The game result image is required.');
+                ->with('flash_warning', 'The game result image is required.');
         }
 
         $image_file = $request->image;

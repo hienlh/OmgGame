@@ -2,17 +2,38 @@
 
 namespace OmgGame\Http\Controllers;
 
+use Carbon\Carbon;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 use OmgGame\Models\Game;
 use OmgGame\Models\GameResult;
+use OmgGame\Models\GameUser;
 
 class ApiController extends Controller
 {
     public function getGames(Request $request, $user_id)
     {
+        return Game::all()
+            ->where('user_id', $user_id)
+            ->where('is_active', 1)
+            ->where('delete_at', null);
+    }
+
+    public function getGamesWithUser(Request $request, $user_id)
+    {
+        if (isset($request->id) && isset($request->name) && isset($request->avatar)) {
+            $game_user = GameUser::find($request->id);
+            if (!isset($game_user)) {
+                $game_user = new GameUser();
+                $game_user->id = $request->id;
+            }
+            $game_user->name = $request->name;
+            $game_user->avatar = $request->avatar;
+            $game_user->last_play = Carbon::now();
+            $game_user->save();
+        }
         return Game::all()
             ->where('user_id', $user_id)
             ->where('is_active', 1)
@@ -28,12 +49,28 @@ class ApiController extends Controller
 
     public function getResult(Request $request, $game_id)
     {
+        if (isset($request->id) && isset($request->name) && isset($request->avatar)) {
+            $game_user = GameUser::find($request->id);
+            if (!isset($game_user)) {
+                $game_user = new GameUser();
+                $game_user->id = $request->id;
+            }
+            $game_user->name = $request->name;
+            $game_user->avatar = $request->avatar;
+            $game_user->last_play = Carbon::now();
+            $game_user->save();
+            $game_user = GameUser::find($request->id);
+            if(!$game_user->games->contains([$request->id, $game_id]))
+                $game_user->games()->attach($game_id);
+        } else {
+            parent::report('Miss information');
+        }
         $result = GameResult::all()
             ->where('game_id', $game_id)
             ->where('delete_at', null);
         $index = array_rand($result->toArray());
         $image_url = $result[$index]->image;
-        $client= new Client();
+        $client = new Client();
         try {
             return $client->post('https://omg-support-server.herokuapp.com', [
                 'form_params' => [

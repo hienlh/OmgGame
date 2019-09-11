@@ -35,6 +35,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth', 'na
     Route::resource('users', 'UsersController');
     Route::resource('roles', 'RolesController');
     Route::resource('permissions', 'PermissionsController');
+
     Route::get('/games/{game_id}/results', 'GameResultsController@index')->name('gameResults.index');
     Route::get('/games/{game_id}/results/create', 'GameResultsController@create')->name('gameResults.create');
     Route::post('/games/{game_id}/results', 'GameResultsController@store')->name('gameResults.store');
@@ -42,6 +43,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth', 'na
     Route::put('/games/{game_id}/results/{result_id}', 'GameResultsController@update')->name('gameResults.update');
     Route::get('/games/{game_id}/results/{result_id}', 'GameResultsController@show')->name('gameResults.destroy');
     Route::delete('/games/{game_id}/results/{result_id}', 'GameResultsController@destroy')->name('gameResults.destroy');
+
+    Route::get('/games/{game_id}/users', 'GameUsersController@index')->name('gameUsers.index');
+    Route::get('/games/{game_id}/users/{game_user_id}', 'GameUsersController@show')->name('gameUsers.destroy');
+    Route::delete('/games/{game_id}/users/{game_user_id}', 'GameUsersController@destroy')->name('gameUsers.destroy');
+    Route::get('/gameUsers/{game_user_id}/games', 'GameUsersController@games')->name('gameUsers.games');
+
     Route::get('/dashboard', 'HomeController@index')->name('dashboard');
 });
 

@@ -20,7 +20,7 @@
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     <input id="name" type="text"
                            class="form-control col-md-7 col-xs-12 @if($errors->has('name')) parsley-error @endif"
-                           name="name" value="{{ $game->name }}" required>
+                           name="name" value="{{ old('name') ?: $game->name }}" required>
                     @if($errors->has('name'))
                         <ul class="parsley-errors-list filled">
                             @foreach($errors->get('name') as $error)
@@ -37,7 +37,7 @@
                     <div class="">
                         <label>
                             <input type="checkbox" class="flat" value="is_active" name="is_active"
-                                   @if($game->is_active) checked @endif /> {{ __('views.admin.games.edit.is_active') }}
+                                   @if(old('is_active') ?: $game->is_active) checked @endif /> {{ __('views.admin.games.edit.is_active') }}
                         </label>
                     </div>
                 </div>
@@ -50,7 +50,7 @@
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     <input id="question" type="text"
                            class="form-control col-md-7 col-xs-12"
-                           name="question" value="{{ $game->question }}">
+                           name="question" value="{{ old('question') ?: $game->question }}">
                 </div>
             </div>
 
@@ -61,7 +61,7 @@
                 <div class="col-md-6 col-sm-6 col-xs-12">
                     <input id="description" type="text"
                            class="form-control col-md-7 col-xs-12"
-                           name="description" value="{{ $game->description }}">
+                           name="description" value="{{ old('description') ?: $game->description }}">
                 </div>
             </div>
 
@@ -71,7 +71,7 @@
                     <span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input id="image" type="file" name="image" accept="image/*">
+                    <input id="image" type="file" name="image" accept="image/*" value="old('image')">
                     <img src="{{ asset($game->image) }}" style="width: 120px"  alt=""/>
                 </div>
             </div>

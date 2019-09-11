@@ -22,4 +22,8 @@ class GameResult extends Model
     {
         return $this->belongsTo('OmgGame\Models\Game', 'game_id');
     }
+
+    public function conditions() {
+        return $this->hasMany('OmgGame\Models\ResultCondition', 'result_id', 'id');
+    }
 }

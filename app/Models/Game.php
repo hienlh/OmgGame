@@ -25,11 +25,15 @@ class Game extends Model
 
     public function users()
     {
-        return $this->hasMany('OmgGame\Models\GameUser', 'game_id', 'id');
+        return $this->belongsToMany('OmgGame\Models\GameUser', 'user_play_game', 'game_id', 'game_user_id');
     }
 
     public function owner()
     {
-        return $this->belongsTo('OmgGame\Models\User');
+        return $this->belongsTo('OmgGame\Models\User', 'user_id');
+    }
+
+    public function info_forms() {
+        return $this->hasMany('OmgGame\Models\InfoForm', 'game_id', 'id');
     }
 }

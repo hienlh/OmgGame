@@ -7,14 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 class GameUser extends Model
 {
     protected $fillable = [
-        'game_id',
+        'id',
         'name',
         'avatar',
         'last_play'
     ];
 
-    public function game()
+    public function games()
     {
-        return $this->belongsTo('OmgGame\Models\Game', 'game_id');
+        return $this->belongsToMany('OmgGame\Models\Game', 'user_play_game', 'game_user_id', 'game_id');
+    }
+
+    public function extra_infos()
+    {
+        return $this->hasMany('OmgGame\Models\ExtraInfo', 'game_user_id', 'id');
     }
 }

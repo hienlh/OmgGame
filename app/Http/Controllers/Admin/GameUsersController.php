@@ -4,7 +4,9 @@ namespace OmgGame\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Kreait\Firebase\Auth;
 use OmgGame\Http\Controllers\Controller;
+use OmgGame\Models\Game;
 use OmgGame\Models\GameUser;
 
 class GameUsersController extends Controller
@@ -12,86 +14,74 @@ class GameUsersController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param $game_id
      * @return Response
      */
-    public function index()
+    public function index($game_id)
     {
-        $gameUsers = GameUser::all();
+        $game = Game::findOrFail($game_id);
+        $game_users = $game->users;
+
         $params = [
-            'title' => 'Game Users Listing',
-            'gameUsers' => $gameUsers
+            'game_users' => $game_users,
+            'game' => $game
         ];
-        return view('admin.gameUsers.gameUsers_list')->with($params);
+
+        return view('admin.gameUsers.index')->with($params);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        return view('admin.gameUsers.gameUsers_create');
-    }
+    public function games($game_user_id) {
+        $game_user = GameUser::findOrFail($game_user_id);
+        $games = [];
+        foreach ($game_user->games as $game) {
+            if($game->owner->id == auth()->user()->id) {
+                array_push($games, $game);
+            }
+        }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     * @return Response
-     */
-    public function store(Request $request)
-    {
-        return redirect()->route('gameUsers.index')->with('success', "The game <strong>Game</strong> has successfully been created.");
+        $params = [
+            'title' => 'List games played',
+            'game_user' => $game_user,
+            'games' => $games,
+        ];
+
+        return view('admin.games.index')->with($params);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param $game_id
+     * @param $game_user_id
      * @return Response
      */
-    public function show($id)
+    public function show($game_id, $game_user_id)
     {
-        $gameUser = GameUser::find($id);
+        $game_user = GameUser::findOrFail($game_user_id);
+        $game = Game::findOrFail($game_id);
         $params = [
-            'title' => 'Delete User',
-            'gameUser' => $gameUser
+            'game_user' => $game_user,
+            'game' => $game
         ];
-        return view('admin.gameUsers.gameUsers_delete')->with($params);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        return view('admin.gameUsers.gameUsers_edit');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param int $id
-     * @return Response
-     */
-    public function update(Request $request, $id)
-    {
-        return redirect()->route('gameUsers.index')->with('success', "The game <strong>Game</strong> has successfully been updated.");
+        return view('admin.gameUsers.show')->with($params);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
+     * @param $game_id
+     * @param $game_user_id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy($game_id, $game_user_id)
     {
-        return redirect()->route('gameUsers.index')->with('success', "The game <strong>Game</strong> has successfully been archived.");
+        $game_user = GameUser::findOrFail($game_user_id);
+        if (!$game_user) {
+            return redirect()
+                ->route('admin.gameUsers.index')
+                ->withFlashDanger('The game user you requested for has not been found.');
+        }
+        $game_user->delete();
+        return redirect()->route('admin.gameUsers.index', [$game_id])->withFlashSuccess("The user has successfully been archived.");
     }
 }
