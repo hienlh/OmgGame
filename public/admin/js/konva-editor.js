@@ -84,6 +84,7 @@ function loadJson(json) {
             y: 50,
             fontSize: 20,
             draggable: true,
+            align: 'center',
             width: 100
         });
 
@@ -112,6 +113,7 @@ function createText() {
         x: 20,
         y: 0,
         fontSize: 20,
+        align: 'center',
         draggable: true,
         width: 170
     });
