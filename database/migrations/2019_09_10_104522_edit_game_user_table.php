@@ -21,7 +21,9 @@ class EditGameUserTable extends Migration
         });
 
         Schema::table('extra_infos', function (Blueprint $table) {
+            $table->dropForeign('extra_infos_game_user_id_foreign');
             $table->string('game_user_id', 50)->change();
+            $table->foreign('game_user_id')->references('id')->on('game_users')->onDelete('cascade');
         });
 
         Schema::create('user_play_game', function (Blueprint $table) {
@@ -51,7 +53,9 @@ class EditGameUserTable extends Migration
         });
 
         Schema::table('extra_infos', function (Blueprint $table) {
+            $table->dropForeign('extra_infos_game_user_id_foreign');
             $table->bigInteger('game_user_id')->unsigned()->index()->change();
+            $table->foreign('game_user_id')->references('id')->on('game_users')->onDelete('cascade');
         });
     }
 }
