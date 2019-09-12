@@ -5,7 +5,6 @@ namespace OmgGame\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Validation\ValidationException;
 use OmgGame\Helpers\Firebase\FirebaseHelper;
 use OmgGame\Http\Controllers\Controller;

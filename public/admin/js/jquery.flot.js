@@ -1529,7 +1529,7 @@ Licensed under the MIT license.
             var minMargin = options.grid.minBorderMargin,
                 axis, i;
 
-            // check stuff from the plot (FIXME: this should just read
+            // check stuff from the plot
             // a value from the series, otherwise it's impossible to
             // customize)
             if (minMargin == null) {
@@ -2010,7 +2010,7 @@ Licensed under the MIT license.
                             ctx.lineTo(xrange.to + subPixel, yrange.to);
                         } else {
                             ctx.moveTo(xrange.from, yrange.to + subPixel);
-                            ctx.lineTo(xrange.to, yrange.to + subPixel);                            
+                            ctx.lineTo(xrange.to, yrange.to + subPixel);
                         }
                         ctx.stroke();
                     } else {
@@ -2466,7 +2466,6 @@ Licensed under the MIT license.
 
             var lw = series.lines.lineWidth,
                 sw = series.shadowSize;
-            // FIXME: consider another form of shadow when filling is turned on
             if (lw > 0 && sw > 0) {
                 // draw shadow as a thick and thin line with transparency
                 ctx.lineWidth = sw;
@@ -2525,9 +2524,9 @@ Licensed under the MIT license.
                 radius = series.points.radius,
                 symbol = series.points.symbol;
 
-            // If the user sets the line width to 0, we change it to a very 
+            // If the user sets the line width to 0, we change it to a very
             // small value. A line width of 0 seems to force the default of 1.
-            // Doing the conditional here allows the shadow setting to still be 
+            // Doing the conditional here allows the shadow setting to still be
             // optional even with a lineWidth of 0.
 
             if( lw == 0 )
@@ -2637,7 +2636,6 @@ Licensed under the MIT license.
             if (lineWidth > 0 && (drawLeft || drawRight || drawTop || drawBottom)) {
                 c.beginPath();
 
-                // FIXME: inline moveTo is buggy with excanvas
                 c.moveTo(left, bottom);
                 if (drawLeft)
                     c.lineTo(left, top);
@@ -2673,7 +2671,6 @@ Licensed under the MIT license.
             ctx.save();
             ctx.translate(plotOffset.left, plotOffset.top);
 
-            // FIXME: figure out a way to add shadows (for instance along the right edge)
             ctx.lineWidth = series.bars.lineWidth;
             ctx.strokeStyle = series.color;
 

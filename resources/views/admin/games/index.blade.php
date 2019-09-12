@@ -33,6 +33,8 @@
                                                             class="fa fa-list-alt"></i></a>
                                                 <a href="{{ route('admin.gameUsers.index', ['game_id' => $game->id]) }}"><i
                                                             class="fa fa-group"></i></a>
+                                                <a href="{{ route('admin.infoForms.index', ['game_id' => $game->id]) }}"><i
+                                                            class="fa fa-info"></i></a>
                                                 <a href="{{ route('admin.games.edit', [$game->id]) }}"><i
                                                             class="fa fa-pencil"></i></a>
                                                 <a href="{{ route('admin.games.destroy', [$game->id]) }}"><i

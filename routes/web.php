@@ -36,6 +36,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth', 'na
     Route::resource('roles', 'RolesController');
     Route::resource('permissions', 'PermissionsController');
 
+    // Game result routes
     Route::get('/games/{game_id}/results', 'GameResultsController@index')->name('gameResults.index');
     Route::get('/games/{game_id}/results/create', 'GameResultsController@create')->name('gameResults.create');
     Route::post('/games/{game_id}/results', 'GameResultsController@store')->name('gameResults.store');
@@ -44,10 +45,20 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth', 'na
     Route::get('/games/{game_id}/results/{result_id}', 'GameResultsController@show')->name('gameResults.destroy');
     Route::delete('/games/{game_id}/results/{result_id}', 'GameResultsController@destroy')->name('gameResults.destroy');
 
+    // Game user routes
     Route::get('/games/{game_id}/users', 'GameUsersController@index')->name('gameUsers.index');
     Route::get('/games/{game_id}/users/{game_user_id}', 'GameUsersController@show')->name('gameUsers.destroy');
     Route::delete('/games/{game_id}/users/{game_user_id}', 'GameUsersController@destroy')->name('gameUsers.destroy');
     Route::get('/gameUsers/{game_user_id}/games', 'GameUsersController@games')->name('gameUsers.games');
+
+    // Game info form routes
+    Route::get('/games/{game_id}/info_form', 'InfoFormsController@index')->name('infoForms.index');
+    Route::get('/games/{game_id}/info_form/create', 'InfoFormsController@create')->name('infoForms.create');
+    Route::post('/games/{game_id}/info_form', 'InfoFormsController@store')->name('infoForms.store');
+    Route::get('/games/{game_id}/info_form/{id}', 'InfoFormsController@show')->name('infoForms.show');
+    Route::put('/games/{game_id}/info_form/edit/{id}', 'InfoFormsController@update')->name('infoForms.update');
+    Route::get('/games/{game_id}/info_form/edit/{id}', 'InfoFormsController@edit')->name('infoForms.edit');
+    Route::delete('/games/{game_id}/info_form/{id}', 'InfoFormsController@destroy')->name('infoForms.destroy');
 
     Route::get('/dashboard', 'HomeController@index')->name('dashboard');
 });
