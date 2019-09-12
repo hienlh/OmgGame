@@ -11,7 +11,8 @@ class InfoForm extends Model
         'type',
         'name',
         'key',
-        'description'
+        'description',
+        'value'
     ];
 
     public function game()

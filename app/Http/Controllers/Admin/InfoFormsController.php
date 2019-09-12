@@ -59,6 +59,7 @@ class InfoFormsController extends Controller
             'type' => $request->input('type'),
             'name' => $request->input('name'),
             'key' => trim($request->input('key')),
+            'value' => $request->input('value'),
             'description' => $request->input('description') ?? ""
         ]);
         return redirect()->route('admin.infoForms.index', [$game_id])
@@ -123,6 +124,7 @@ class InfoFormsController extends Controller
         $form->type = $request->input('type');
         $form->name = $request->input('name');
         $form->key = trim($request->input('key'));
+        $form->value = $request->input('value');
         $form->description = $request->input('description') ?? "";
         $form->save();
 

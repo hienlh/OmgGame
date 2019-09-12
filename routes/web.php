@@ -60,6 +60,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth', 'na
     Route::get('/games/{game_id}/info_form/edit/{id}', 'InfoFormsController@edit')->name('infoForms.edit');
     Route::delete('/games/{game_id}/info_form/{id}', 'InfoFormsController@destroy')->name('infoForms.destroy');
 
+    // Game result condition
+//    Route::get('/game_results/{result_id}/conditions', 'ResultConditionsController@index')->name('conditions.index');
+//    Route::get('/game_results/{result_id}/conditions/create', 'ResultConditionsController@create')->name('conditions.create');
+
+    // Extra info
+    Route::get('/game_users/{game_user_id}/extra_infos', 'ExtraInfosController@index')->name('extraInfos.index');
+    Route::get('/game_users/{game_user_id}/extra_infos/{id}', 'ExtraInfosController@show')->name('extraInfos.show');
+    Route::delete('/game_users/{game_user_id}/extra_infos/{id}', 'ExtraInfosController@destroy')->name('extraInfos.destroy');
+
     Route::get('/dashboard', 'HomeController@index')->name('dashboard');
 });
 

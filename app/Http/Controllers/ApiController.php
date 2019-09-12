@@ -10,11 +10,13 @@ use Intervention\Image\Facades\Image;
 use OmgGame\Models\Game;
 use OmgGame\Models\GameResult;
 use OmgGame\Models\GameUser;
+use OmgGame\Models\InfoForm;
 
 class ApiController extends Controller
 {
     public function getGames(Request $request, $user_id)
     {
+        $this->saveUserInfo($request);
         return Game::all()
             ->where('user_id', $user_id)
             ->where('is_active', 1)
@@ -23,17 +25,7 @@ class ApiController extends Controller
 
     public function getGamesWithUser(Request $request, $user_id)
     {
-        if (isset($request->id) && isset($request->name) && isset($request->avatar)) {
-            $game_user = GameUser::find($request->id);
-            if (!isset($game_user)) {
-                $game_user = new GameUser();
-                $game_user->id = $request->id;
-            }
-            $game_user->name = $request->name;
-            $game_user->avatar = $request->avatar;
-            $game_user->last_play = Carbon::now();
-            $game_user->save();
-        }
+        $this->saveUserInfo($request);
         return Game::all()
             ->where('user_id', $user_id)
             ->where('is_active', 1)
@@ -42,6 +34,7 @@ class ApiController extends Controller
 
     public function getResults(Request $request, $game_id)
     {
+        $this->saveUserInfo($request);
         return GameResult::all()
             ->where('game_id', $game_id)
             ->where('delete_at', null);
@@ -49,22 +42,7 @@ class ApiController extends Controller
 
     public function getResult(Request $request, $game_id)
     {
-        if (isset($request->id) && isset($request->name) && isset($request->avatar)) {
-            $game_user = GameUser::find($request->id);
-            if (!isset($game_user)) {
-                $game_user = new GameUser();
-                $game_user->id = $request->id;
-            }
-            $game_user->name = $request->name;
-            $game_user->avatar = $request->avatar;
-            $game_user->last_play = Carbon::now();
-            $game_user->save();
-            $game_user = GameUser::find($request->id);
-            if(!$game_user->games->contains($game_id))
-                $game_user->games()->attach($game_id);
-        } else {
-            parent::report('Miss information');
-        }
+        $this->saveUserPlayGame($request, $game_id);
         $result = GameResult::all()
             ->where('game_id', $game_id)
             ->where('delete_at', null);
@@ -82,6 +60,42 @@ class ApiController extends Controller
             ]);
         } catch (GuzzleException $e) {
             return $game_id;
+        }
+    }
+
+    public function getInfoForms(Request $request, $game_id) {
+        $this->saveUserPlayGame($request, $game_id);
+        return InfoForm::all()->where('game_id', $game_id);
+    }
+
+    protected function saveUserInfo(Request $request) {
+        if (isset($request->id) && isset($request->name) && isset($request->avatar)) {
+            $game_user = GameUser::find($request->id);
+            if (!isset($game_user)) {
+                $game_user = new GameUser();
+                $game_user->id = $request->id;
+            }
+            $game_user->name = $request->name;
+            $game_user->avatar = $request->avatar;
+            $game_user->last_play = Carbon::now();
+            $game_user->save();
+        }
+    }
+
+    protected function saveUserPlayGame(Request $request, $game_id) {
+        if (isset($request->id) && isset($request->name) && isset($request->avatar)) {
+            $game_user = GameUser::find($request->id);
+            if (!isset($game_user)) {
+                $game_user = new GameUser();
+                $game_user->id = $request->id;
+            }
+            $game_user->name = $request->name;
+            $game_user->avatar = $request->avatar;
+            $game_user->last_play = Carbon::now();
+            $game_user->save();
+            $game_user = GameUser::find($request->id);
+            if(!$game_user->games->contains($game_id))
+                $game_user->games()->attach($game_id);
         }
     }
 
