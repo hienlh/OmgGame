@@ -53,14 +53,16 @@ class EditGameUserTable extends Migration
         });
 
         Schema::table('game_users', function (Blueprint $table) {
-            $table->bigInteger('game_id')->unsigned()->index();
-            $table->foreign('game_id')->references('id')->on('games')->onDelete('cascade');
-
+            $table->bigInteger('game_id')->unsigned()->index()->default(1);
             $table->bigIncrements('id')->change();
         });
 
+        Schema::table('game_users', function (Blueprint $table) {
+            $table->foreign('game_id')->references('id')->on('games')->onDelete('cascade');
+        });
+
         Schema::table('extra_infos', function (Blueprint $table) {
-            $table->bigInteger('game_user_id')->unsigned()->index()->change();
+            $table->bigInteger('game_user_id')->unsigned()->change();
             $table->foreign('game_user_id')->references('id')->on('game_users')->onDelete('cascade');
         });
     }
