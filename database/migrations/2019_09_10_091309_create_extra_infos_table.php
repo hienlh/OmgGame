@@ -14,17 +14,17 @@ class CreateExtraInfosTable extends Migration
     public function up()
     {
         Schema::create('extra_infos', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('game_user_id')->unsigned()->index();
-            $table->bigInteger('info_form_id')->unsigned()->index();
-            $table->text('key');
+            $table->bigInteger('game_user_id')->unsigned();
+            $table->string('key', 50);
             $table->longText('description');
             $table->longText('value');
             $table->timestamps();
             $table->softDeletes();
 
+            $table->primary(['game_user_id', 'key']);
+
             $table->foreign('game_user_id')->references('id')->on('game_users')->onDelete('cascade');
-            $table->foreign('info_form_id')->references('id')->on('info_forms');
+            $table->foreign('key')->references('key')->on('info_forms');
         });
     }
 

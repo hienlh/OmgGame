@@ -14,14 +14,15 @@ class CreateResultConditionsTable extends Migration
     public function up()
     {
         Schema::create('result_conditions', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->bigInteger('result_id')->unsigned()->index();
-            $table->bigInteger('extra_info_id')->unsigned()->index();
+            $table->string('key', 50);
             $table->longText('condition');
+            $table->string('operator', 10);
             $table->timestamps();
 
-            $table->primary(['result_id', 'extra_info_id']);
             $table->foreign('result_id')->references('id')->on('game_results')->onDelete('cascade');
-            $table->foreign('extra_info_id')->references('id')->on('extra_infos')->onDelete('cascade');
+            $table->foreign('key')->references('key')->on('info_forms')->onDelete('cascade');
         });
     }
 
