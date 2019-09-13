@@ -37,6 +37,11 @@ class PermissionsTableSeeder extends Seeder
                 'name' => 'permissions',
                 'display_name' => 'Manage Permissions',
                 'description' => 'User has access to manage permissions'
+            ],
+            [
+                'name' => 'info_forms',
+                'display_name' => 'Manage Info Forms',
+                'description' => 'User has access to manage info forms'
             ]
         ];
 

@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             {!! Form::open([
-                'route'=>['admin.infoForms.update', 'game_id' => $game->id, 'id' => $infoForm->id],
+                'route'=>['admin.info_forms.update', 'id' => $infoForm->key],
                 'files' => true,
                 'id' => 'form',
                 'method' => 'put',
@@ -25,25 +25,6 @@
                     @if($errors->has('name'))
                         <ul class="parsley-errors-list filled">
                             @foreach($errors->get('name') as $error)
-                                <li class="parsley-required">{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    @endif
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="key">
-                    {{ __('views.admin.infoForms.create.key') }}
-                    <span class="required">*</span>
-                </label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input id="key" type="text"
-                           class="form-control col-md-7 col-xs-12 @if($errors->has("key")) parsley-error @endif"
-                           name="key" value="{{ old("key") ?: $infoForm->key }}" required>
-                    @if($errors->has("key"))
-                        <ul class="parsley-errors-list filled">
-                            @foreach($errors->get("key") as $error)
                                 <li class="parsley-required">{{ $error }}</li>
                             @endforeach
                         </ul>

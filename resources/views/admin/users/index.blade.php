@@ -4,8 +4,8 @@
 
 @section('content')
     <div class="row">
-        <a href="{{route('admin.users.create')}}" class="btn btn-info btn-xs"><i
-                class="fa fa-plus"></i> {{ __('views.admin.users.index.create') }} </a>
+{{--        <a href="{{route('admin.users.create')}}" class="btn btn-info btn-xs"><i--}}
+{{--                class="fa fa-plus"></i> {{ __('views.admin.users.index.create') }} </a>--}}
         <table class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0"
                width="100%">
             <thead>

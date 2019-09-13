@@ -32,9 +32,10 @@ Route::get('/home', function () {
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth', 'namespace' => 'Admin'], function () {
     Route::resource('games', 'GamesController');
     Route::get('all-games', 'AllGamesController@index')->name('all-games.index');
-    Route::resource('users', 'UsersController');
+    Route::resource('users', 'UsersController')->except('create');
     Route::resource('roles', 'RolesController');
     Route::resource('permissions', 'PermissionsController');
+    Route::resource('info_forms', 'InfoFormsController');
 
     // Game result routes
     Route::get('/games/{game_id}/results', 'GameResultsController@index')->name('gameResults.index');
@@ -52,13 +53,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth', 'na
     Route::get('/gameUsers/{game_user_id}/games', 'GameUsersController@games')->name('gameUsers.games');
 
     // Game info form routes
-    Route::get('/games/{game_id}/info_form', 'InfoFormsController@index')->name('infoForms.index');
-    Route::get('/games/{game_id}/info_form/create', 'InfoFormsController@create')->name('infoForms.create');
-    Route::post('/games/{game_id}/info_form', 'InfoFormsController@store')->name('infoForms.store');
-    Route::get('/games/{game_id}/info_form/{id}', 'InfoFormsController@show')->name('infoForms.show');
-    Route::put('/games/{game_id}/info_form/edit/{id}', 'InfoFormsController@update')->name('infoForms.update');
-    Route::get('/games/{game_id}/info_form/edit/{id}', 'InfoFormsController@edit')->name('infoForms.edit');
-    Route::delete('/games/{game_id}/info_form/{id}', 'InfoFormsController@destroy')->name('infoForms.destroy');
+//    Route::get('/games/{game_id}/info_form', 'InfoFormsController@index')->name('infoForms.index');
+//    Route::get('/games/{game_id}/info_form/create', 'InfoFormsController@create')->name('infoForms.create');
+//    Route::post('/games/{game_id}/info_form', 'InfoFormsController@store')->name('infoForms.store');
+//    Route::get('/games/{game_id}/info_form/{id}', 'InfoFormsController@show')->name('infoForms.show');
+//    Route::put('/games/{game_id}/info_form/edit/{id}', 'InfoFormsController@update')->name('infoForms.update');
+//    Route::get('/games/{game_id}/info_form/edit/{id}', 'InfoFormsController@edit')->name('infoForms.edit');
+//    Route::delete('/games/{game_id}/info_form/{id}', 'InfoFormsController@destroy')->name('infoForms.destroy');
 
     // Game result condition
 //    Route::get('/game_results/{result_id}/conditions', 'ResultConditionsController@index')->name('conditions.index');

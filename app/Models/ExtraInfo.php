@@ -11,7 +11,6 @@ class ExtraInfo extends Model
     protected $dates = ['delete_at'];
     protected $fillable = [
         'game_user_id',
-        'info_form_id',
         'key',
         'description',
         'value'
@@ -24,6 +23,6 @@ class ExtraInfo extends Model
 
     public function info_form()
     {
-        return $this->belongsTo('OmgGame\Models\InfoForm', 'info_form_id');
+        return $this->belongsTo('OmgGame\Models\InfoForm', 'key');
     }
 }

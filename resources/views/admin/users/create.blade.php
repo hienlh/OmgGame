@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             {{ Form::open([
-                'route'=>['admin.roles.store'],
+                'route'=>['admin.users.store'],
                 'method' => 'post',
                 'class'=>'form-horizontal form-label-left',
                 'files' => true
@@ -14,7 +14,7 @@
 
             <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-                    {{ __('views.admin.roles.create.name') }}
+                    {{ __('views.admin.name') }}
                     <span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
@@ -54,14 +54,14 @@
             </div>
 
             <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="permissions">
-                    {{ __('views.admin.roles.create.permissions') }}
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="roles">
+                    {{ __('views.admin.roles') }}
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    <select id="permissions" name="permissions[]" class="select2" multiple="multiple"
+                    <select id="roles" name="roles[]" class="select2" multiple="multiple"
                             style="width: 100%" autocomplete="off">
-                        @foreach($permissions as $permission)
-                            <option value="{{ $permission->id }}">{{ $permission->display_name }}</option>
+                        @foreach($roles as $role)
+                            <option value="{{ $role->id }}">{{ $role->display_name }}</option>
                         @endforeach
                     </select>
                 </div>

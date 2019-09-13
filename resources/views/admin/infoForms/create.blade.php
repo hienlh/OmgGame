@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             {{ Form::open([
-                'route'=>['admin.infoForms.store', $game->id],
+                'route'=>['admin.info_forms.store'],
                 'method' => 'post',
                 'class'=>'form-horizontal form-label-left',
                 'id'=>'form',

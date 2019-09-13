@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="row">
-        <a href="{{route('admin.infoForms.create', [$game->id])}}" class="btn btn-info btn-xs"><i
+        <a href="{{route('admin.info_forms.create')}}" class="btn btn-info btn-xs"><i
                 class="fa fa-plus"></i> {{ __('views.admin.infoForms.index.create') }} </a>
         <table class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0"
                width="100%">
@@ -27,12 +27,12 @@
                     <td>{{ $infoForm->value }}</td>
                     <td>{{ $infoForm->description }}</td>
                     <td>
-                        <a class="btn btn-xs btn-info" href="{{ route('admin.infoForms.edit', [$game->id, $infoForm->id]) }}"
+                        <a class="btn btn-xs btn-info" href="{{ route('admin.info_forms.edit', [$infoForm->key]) }}"
                            data-toggle="tooltip" data-placement="top"
                            data-title="{{ __('views.admin.infoForms.index.edit') }}">
                             <i class="fa fa-pencil"></i>
                         </a>
-                        <a href="{{ route('admin.infoForms.show', [$game->id, $infoForm->id]) }}"
+                        <a href="{{ route('admin.info_forms.show', [$infoForm->key]) }}"
                            class="btn btn-xs btn-danger user_destroy" data-toggle="tooltip" data-placement="top"
                            data-title="{{ __('views.admin.infoForms.index.delete') }}">
                             <i class="fa fa-trash"></i>
@@ -42,8 +42,5 @@
             @endforeach
             </tbody>
         </table>
-        <div class="pull-right">
-            {{ $infoForms->links() }}
-        </div>
     </div>
 @endsection

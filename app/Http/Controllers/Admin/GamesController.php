@@ -9,6 +9,7 @@ use Illuminate\Validation\ValidationException;
 use OmgGame\Helpers\Firebase\FirebaseHelper;
 use OmgGame\Http\Controllers\Controller;
 use OmgGame\Models\Game;
+use OmgGame\Models\InfoForm;
 use OmgGame\Models\User;
 
 class GamesController extends Controller
@@ -37,11 +38,11 @@ class GamesController extends Controller
      */
     public function create()
     {
-        $users = User::all();
+        $info_forms = InfoForm::all();
 
         $params = [
             'title' => 'Create Game',
-            'users' => $users
+            'info_forms' => $info_forms
         ];
 
         return view('admin.games.create')->with($params);
@@ -69,6 +70,10 @@ class GamesController extends Controller
             'description' => $request->input('description'),
             'image' => FirebaseHelper::getInstance()->upload($request->image, 'games'),
         ]);
+
+        if ($request->has('info_forms')) {
+            $game->info_forms()->attach($request->get('info_forms'));
+        }
         return redirect()->route('admin.games.index')->withFlashSuccess("The game <strong>$game->name</strong> has successfully been created.");
     }
 
@@ -80,10 +85,12 @@ class GamesController extends Controller
      */
     public function show($id)
     {
+        $info_forms = InfoForm::all();
         $game = Game::findOrFail($id);
 
         $params = [
-            'game' => $game
+            'game' => $game,
+            'info_forms' => $info_forms
         ];
 
         return view('admin.games.show')->with($params);
@@ -98,8 +105,14 @@ class GamesController extends Controller
     public function edit($id)
     {
         $game = Game::findOrFail($id);
+        $info_forms = InfoForm::all();
 
-        return view('admin.games.edit', ['game' => $game]);
+        $params = [
+            'game' => $game,
+            'info_forms' => $info_forms
+        ];
+
+        return view('admin.games.edit', $params);
     }
 
     /**
@@ -139,13 +152,18 @@ class GamesController extends Controller
         $game->is_active = $request->input('is_active') ? true : false;
         $game->name = $request->input('name');
         $game->question = $request->input('question');
-        if($image_file) $game->image = FirebaseHelper::getInstance()->upload($image_file, 'games');
+        if ($image_file) $game->image = FirebaseHelper::getInstance()->upload($image_file, 'games');
         $game->description = $request->input('description');
 
         $game->save();
 
         if ($image_file && $old_image && $old_image != $game->image) {
             FirebaseHelper::getInstance()->delete($old_image);
+        }
+
+        if ($request->has('info_forms')) {
+            $game->info_forms()->detach();
+            $game->info_forms()->attach($request->get('info_forms'));
         }
 
         return redirect()->route('admin.games.index')->withFlashSuccess("The game <strong>$game->name</strong> has successfully been updated.");

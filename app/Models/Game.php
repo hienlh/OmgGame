@@ -33,7 +33,8 @@ class Game extends Model
         return $this->belongsTo('OmgGame\Models\User', 'user_id');
     }
 
-    public function info_forms() {
-        return $this->hasMany('OmgGame\Models\InfoForm', 'game_id', 'id');
+    public function info_forms()
+    {
+        return $this->belongsToMany('OmgGame\Models\InfoForm', 'game_info_form', 'game_id', 'key', 'id', 'key');
     }
 }

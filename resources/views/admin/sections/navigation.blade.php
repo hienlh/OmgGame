@@ -46,6 +46,14 @@
                         </a>
                     </li>
                     @endpermission
+                    @permission('info_forms')
+                    <li>
+                        <a href="{{ route('admin.info_forms.index') }}">
+                            <i class="fa fa-gamepad" aria-hidden="true"></i>
+                            {{ __('views.admin.info_forms') }}
+                        </a>
+                    </li>
+                    @endpermission
                     @permission('customer')
                     <li>
                         <a href="{{ route('admin.games.index') }}">
