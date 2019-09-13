@@ -15,15 +15,12 @@ class CreateInfoFormsTable extends Migration
     {
         Schema::create('info_forms', function (Blueprint $table) {
             $table->string('key', 50)->primary();
-            $table->bigInteger('game_id')->unsigned()->index();
             $table->longText('name');
             $table->text('type');
             $table->longText('description');
             $table->longText('value');
             $table->timestamps();
             $table->softDeletes();
-
-            $table->foreign('game_id')->references('id')->on('games')->onDelete('cascade');
         });
 
         Schema::create('game_info_form', function (Blueprint $table) {
