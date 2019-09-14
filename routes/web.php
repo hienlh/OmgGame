@@ -52,18 +52,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth', 'na
     Route::delete('/games/{game_id}/users/{game_user_id}', 'GameUsersController@destroy')->name('gameUsers.destroy');
     Route::get('/gameUsers/{game_user_id}/games', 'GameUsersController@games')->name('gameUsers.games');
 
-    // Game info form routes
-//    Route::get('/games/{game_id}/info_form', 'InfoFormsController@index')->name('infoForms.index');
-//    Route::get('/games/{game_id}/info_form/create', 'InfoFormsController@create')->name('infoForms.create');
-//    Route::post('/games/{game_id}/info_form', 'InfoFormsController@store')->name('infoForms.store');
-//    Route::get('/games/{game_id}/info_form/{id}', 'InfoFormsController@show')->name('infoForms.show');
-//    Route::put('/games/{game_id}/info_form/edit/{id}', 'InfoFormsController@update')->name('infoForms.update');
-//    Route::get('/games/{game_id}/info_form/edit/{id}', 'InfoFormsController@edit')->name('infoForms.edit');
-//    Route::delete('/games/{game_id}/info_form/{id}', 'InfoFormsController@destroy')->name('infoForms.destroy');
-
     // Game result condition
-//    Route::get('/game_results/{result_id}/conditions', 'ResultConditionsController@index')->name('conditions.index');
-//    Route::get('/game_results/{result_id}/conditions/create', 'ResultConditionsController@create')->name('conditions.create');
+    Route::get('/game_results/{result_id}/conditions', 'ResultConditionsController@index')->name('conditions.index');
+    Route::get('/game_results/{result_id}/conditions/create', 'ResultConditionsController@create')->name('conditions.create');
+    Route::post('/game_results/{result_id}/conditions', 'ResultConditionsController@store')->name('conditions.store');
+    Route::get('/game_results/{result_id}/conditions/{id}/edit', 'ResultConditionsController@edit')->name('conditions.edit');
+    Route::put('/game_results/{result_id}/conditions/{id}', 'ResultConditionsController@update')->name('conditions.update');
+    Route::get('/game_results/{result_id}/conditions/{id}/show', 'ResultConditionsController@show')->name('conditions.show');
+    Route::delete('/game_results/{result_id}/conditions/{id}', 'ResultConditionsController@destroy')->name('conditions.destroy');
 
     // Extra info
     Route::get('/game_users/{game_user_id}/extra_infos', 'ExtraInfosController@index')->name('extraInfos.index');

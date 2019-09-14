@@ -10,7 +10,6 @@ use OmgGame\Helpers\Firebase\FirebaseHelper;
 use OmgGame\Http\Controllers\Controller;
 use OmgGame\Models\Game;
 use OmgGame\Models\InfoForm;
-use OmgGame\Models\User;
 
 class GamesController extends Controller
 {

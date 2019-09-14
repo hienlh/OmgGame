@@ -23,6 +23,8 @@
                                         <div class="mask">
                                             <p style="color: rgba(255,255,255,0)">_</p>
                                             <div class="tools tools-bottom">
+                                                <a href="{{ route('admin.conditions.index', [$result->id]) }}"><i
+                                                            class="fa fa-link"></i></a>
                                                 <a href="{{ route('admin.gameResults.edit', [$game->id, $result->id]) }}"><i
                                                             class="fa fa-pencil"></i></a>
                                                 <a href="{{ route('admin.gameResults.destroy', [$game->id, $result->id]) }}"><i

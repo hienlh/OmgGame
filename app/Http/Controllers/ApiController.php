@@ -7,10 +7,13 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
+use OmgGame\Models\ExtraInfo;
 use OmgGame\Models\Game;
 use OmgGame\Models\GameResult;
 use OmgGame\Models\GameUser;
 use OmgGame\Models\InfoForm;
+use OmgGame\Models\Operator;
+use Psr\Http\Message\ResponseInterface;
 
 class ApiController extends Controller
 {
@@ -40,32 +43,66 @@ class ApiController extends Controller
             ->where('delete_at', null);
     }
 
+    /**
+     * @param Request $request id,name,avatar
+     * @param $game_id
+     * @return ResponseInterface|string
+     */
     public function getResult(Request $request, $game_id)
     {
         $this->saveUserPlayGame($request, $game_id);
-        $result = GameResult::all()
+
+        $extra_infos = [];
+        foreach (ExtraInfo::all()->where('game_user_id', $request->id) as $info) {
+            $extra_infos[$info->key] = $info->value;
+        }
+        $random_list = [];
+        $results = GameResult::all()
             ->where('game_id', $game_id)
             ->where('delete_at', null);
-        $index = array_rand($result->toArray());
-        $image_url = $result[$index]->image;
+
+        foreach ($results as $result) {
+            $conditions = $result->conditions;
+            $correct_condition = true;
+            //TODO parse int | parse date if can
+            foreach ($conditions as $condition) {
+                if(!Operator::handle($extra_infos[$condition->key], $condition->condition, $condition->operator))
+                {
+                    $correct_condition = false;
+                    break;
+                }
+            }
+            if($correct_condition) {
+                array_push($random_list, $result);
+            }
+        }
+
+        if(count($random_list) <= 0) return "";
+        $index = array_rand($random_list);
+        $image_url = $random_list[$index]->image;
+
+        return $this->renderImageResult($random_list[$index]->design, $image_url, $request->avatar, $request->name);
+    }
+
+    protected function renderImageResult($design, $background, $avatar, $name) {
         $client = new Client();
         try {
             return $client->post('https://omg-support-server.herokuapp.com', [
                 'form_params' => [
-                    'json' => $result[$index]->design,
-                    'background' => $image_url,
-                    'avatar' => $request->avatar,
-                    'name' => $request->name
+                    'json' => $design,
+                    'background' => $background,
+                    'avatar' => $avatar,
+                    'name' => $name
                 ]
             ]);
         } catch (GuzzleException $e) {
-            return $game_id;
+            return "";
         }
     }
 
     public function getInfoForms(Request $request, $game_id) {
         $this->saveUserPlayGame($request, $game_id);
-        return InfoForm::all()->where('game_id', $game_id);
+        return Game::findOrFail($game_id)->info_forms;
     }
 
     protected function saveUserInfo(Request $request) {

@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             {!! Form::open([
-                'route'=>['admin.infoForms.update', 'game_id' => $game->id, 'id' => $infoForm->id],
+                'route'=>['admin.conditions.update', 'result_id' => $result->id, 'id' => $condition->id],
                 'files' => true,
                 'id' => 'form',
                 'method' => 'put',
@@ -14,33 +14,39 @@
              ]) !!}
 
             <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">
-                    {{ __('views.admin.infoForms.create.name') }}
-                    <span class="required">*</span>
-                </label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input id="name" type="text"
-                           class="form-control col-md-7 col-xs-12 @if($errors->has('name')) parsley-error @endif"
-                           name="name" value="{{ old('name') ?: $infoForm->name }}" required>
-                    @if($errors->has('name'))
-                        <ul class="parsley-errors-list filled">
-                            @foreach($errors->get('name') as $error)
-                                <li class="parsley-required">{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    @endif
-                </div>
-            </div>
-
-            <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="key">
-                    {{ __('views.admin.infoForms.create.key') }}
+                    {{ __('views.admin.info_form') }}
                     <span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input id="key" type="text"
-                           class="form-control col-md-7 col-xs-12 @if($errors->has("key")) parsley-error @endif"
-                           name="key" value="{{ old("key") ?: $infoForm->key }}" required>
+                    <select id="key" name="key" class="form-control @if($errors->has("condition")) parsley-error @endif"
+                            required>
+                        <option
+                            value="{{ old('key') ?? $condition->key }}">
+                            @if(old('key'))
+                                @foreach($forms as $form)
+                                    @if(old('key') == $form->key)
+                                        {{ $form->name }}
+                                        @break
+                                    @endif
+                                @endforeach
+                            @else
+                                @foreach($forms as $form)
+                                    @if($condition->key == $form->key)
+                                        {{ $form->name }}
+                                        @break
+                                    @endif
+                                @endforeach
+                            @endif
+                        </option>
+                        @foreach($forms as $form)
+                            @if(old('key') && old('key') != $form->key)
+                                <option value="{{ $form->key }}">{{ $form->name }}</option>
+                            @elseif ($form->key != $condition->key)
+                                <option value="{{ $form->key }}">{{ $form->name }}</option>
+                            @endif
+                        @endforeach
+                    </select>
                     @if($errors->has("key"))
                         <ul class="parsley-errors-list filled">
                             @foreach($errors->get("key") as $error)
@@ -52,34 +58,17 @@
             </div>
 
             <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="type">
-                    {{ __('views.admin.infoForms.create.type') }}
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="condition">
+                    {{ __('views.admin.condition') }}
                     <span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    <select id="type" name="type" class="form-control" required>
-                        <option
-                            value="{{ old('type') ?: $infoForm->type }}">{{ old('type') ?: $infoForm->type ?: __('views.admin.infoForms.create.choose_type') }}</option>
-                        @foreach($types as $type)
-                            @if(old('type') != $type and $infoForm->type != $type)
-                                <option value="{{ $type }}">{{ $type }}</option>
-                            @endif
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="value">
-                    {{ __('views.admin.infoForms.create.value') }}
-                </label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input id="value" type="text"
-                           class="form-control col-md-7 col-xs-12 @if($errors->has("value")) parsley-error @endif"
-                           name="value" value="{{ old("value") ?: $infoForm->value }}">
-                    @if($errors->has("value"))
+                    <input id="condition" type="text"
+                           class="form-control col-md-7 col-xs-12 @if($errors->has("condition")) parsley-error @endif"
+                           name="condition" value="{{ old("condition") ?? $condition->condition }}" required>
+                    @if($errors->has("condition"))
                         <ul class="parsley-errors-list filled">
-                            @foreach($errors->get("value") as $error)
+                            @foreach($errors->get("condition") as $error)
                                 <li class="parsley-required">{{ $error }}</li>
                             @endforeach
                         </ul>
@@ -88,17 +77,22 @@
             </div>
 
             <div class="form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="description">
-                    {{ __('views.admin.infoForms.create.description') }}
-                    <span class="required">*</span>
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="operator">
+                    {{ __('views.admin.operator') }}
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input id="description" type="text"
-                           class="form-control col-md-7 col-xs-12 @if($errors->has("description")) parsley-error @endif"
-                           name="description" value="{{ old("description") ?: $infoForm->description }}" required>
-                    @if($errors->has("description"))
+                    <select id="operator" name="operator" class="form-control">
+                        <option
+                            value="{{ old('operator') ?? $condition->operator }}">{{ old('operator') ?? $condition->operator }}</option>
+                        @foreach($operators as $operator)
+                            @if(old('operator')  != $operator)
+                                <option value="{{ $operator }}">{{ $operator }}</option>
+                            @endif
+                        @endforeach
+                    </select>
+                    @if($errors->has("operator"))
                         <ul class="parsley-errors-list filled">
-                            @foreach($errors->get("description") as $error)
+                            @foreach($errors->get("operator") as $error)
                                 <li class="parsley-required">{{ $error }}</li>
                             @endforeach
                         </ul>
