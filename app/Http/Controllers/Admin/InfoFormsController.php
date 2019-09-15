@@ -33,7 +33,6 @@ class InfoFormsController extends Controller
         return view('admin.infoForms.create', ['types' => $types]);
     }
 
-    // TODO Add table user_game_user to save relationship between user and game user (many to many)
     public function store(Request $request)
     {
         $this->validate($request, [

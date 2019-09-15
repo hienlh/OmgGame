@@ -3,6 +3,7 @@
 namespace OmgGame\Http\Controllers;
 
 use Carbon\Carbon;
+use DateTime;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
@@ -12,6 +13,7 @@ use OmgGame\Models\Game;
 use OmgGame\Models\GameResult;
 use OmgGame\Models\GameUser;
 use OmgGame\Models\InfoForm;
+use OmgGame\Models\InfoFormType;
 use OmgGame\Models\Operator;
 use Psr\Http\Message\ResponseInterface;
 
@@ -64,27 +66,40 @@ class ApiController extends Controller
         foreach ($results as $result) {
             $conditions = $result->conditions;
             $correct_condition = true;
-            //TODO parse int | parse date if can
             foreach ($conditions as $condition) {
-                if(!Operator::handle($extra_infos[$condition->key], $condition->condition, $condition->operator))
-                {
+                $date1 = DateTime::createFromFormat('d/m/Y', $extra_infos[$condition->key]);
+                $date2 = DateTime::createFromFormat('d/m/Y', $condition->condition);
+                if ($condition->info_form->type == InfoFormType::$datePicker && $date1 && $date2) {
+                    if (!Operator::handle($date1, $date2, $condition->operator)) {
+                        $correct_condition = false;
+                        break;
+                    }
+                } // Comment because php can compare 2 string like number if those string can convert to number, we don't need to convert as well
+//                else if (is_numeric($extra_infos[$condition->key]) && is_numeric($condition->condition)) {
+//                    if (!Operator::handle($extra_infos[$condition->key] + 0, $condition->condition + 0, $condition->operator)) {
+//                        $correct_condition = false;
+//                        break;
+//                    }
+//                }
+                else if (!Operator::handle($extra_infos[$condition->key], $condition->condition, $condition->operator)) {
                     $correct_condition = false;
                     break;
                 }
             }
-            if($correct_condition) {
+            if ($correct_condition) {
                 array_push($random_list, $result);
             }
         }
 
-        if(count($random_list) <= 0) return "";
+        if (count($random_list) <= 0) return "";
         $index = array_rand($random_list);
         $image_url = $random_list[$index]->image;
 
         return $this->renderImageResult($random_list[$index]->design, $image_url, $request->avatar, $request->name);
     }
 
-    protected function renderImageResult($design, $background, $avatar, $name) {
+    protected function renderImageResult($design, $background, $avatar, $name)
+    {
         $client = new Client();
         try {
             return $client->post('https://omg-support-server.herokuapp.com', [
@@ -100,12 +115,14 @@ class ApiController extends Controller
         }
     }
 
-    public function getInfoForms(Request $request, $game_id) {
+    public function getInfoForms(Request $request, $game_id)
+    {
         $this->saveUserPlayGame($request, $game_id);
         return Game::findOrFail($game_id)->info_forms;
     }
 
-    protected function saveUserInfo(Request $request) {
+    protected function saveUserInfo(Request $request)
+    {
         if (isset($request->id) && isset($request->name) && isset($request->avatar)) {
             $game_user = GameUser::find($request->id);
             if (!isset($game_user)) {
@@ -119,7 +136,8 @@ class ApiController extends Controller
         }
     }
 
-    protected function saveUserPlayGame(Request $request, $game_id) {
+    protected function saveUserPlayGame(Request $request, $game_id)
+    {
         if (isset($request->id) && isset($request->name) && isset($request->avatar)) {
             $game_user = GameUser::find($request->id);
             if (!isset($game_user)) {
@@ -131,7 +149,7 @@ class ApiController extends Controller
             $game_user->last_play = Carbon::now();
             $game_user->save();
             $game_user = GameUser::find($request->id);
-            if(!$game_user->games->contains($game_id))
+            if (!$game_user->games->contains($game_id))
                 $game_user->games()->attach($game_id);
         }
     }
