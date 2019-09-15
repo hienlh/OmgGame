@@ -8,8 +8,9 @@ class ResultCondition extends Model
 {
     protected $fillable = [
         'result_id',
-        'extra_info_id',
-        'condition'
+        'key',
+        'condition',
+        'operator'
     ];
 
     public function game_result()
@@ -17,8 +18,8 @@ class ResultCondition extends Model
         return $this->belongsTo('OmgGame\Models\GameResult', 'result_id');
     }
 
-    public function extra_info()
+    public function info_form()
     {
-        return $this->belongsTo('OmgGame\Models\ExtraInfo', 'extra_info_id');
+        return $this->belongsTo('OmgGame\Models\InfoForm', 'key');
     }
 }

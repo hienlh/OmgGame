@@ -7,20 +7,23 @@ use Illuminate\Database\Eloquent\Model;
 class InfoForm extends Model
 {
     protected $fillable = [
-        'game_id',
         'type',
         'name',
         'key',
-        'description'
+        'description',
+        'value'
     ];
 
-    public function game()
+    protected $primaryKey = 'key';
+    protected $keyType = 'string';
+
+    public function games()
     {
-        $this->belongsTo('OmgGame\Models\Game', 'game_id');
+        $this->belongsToMany('OmgGame\Models\Game', 'game_info_form', 'key', 'game_id', 'key', 'id');
     }
 
     public function extra_infos()
     {
-        $this->hasMany('OmgGame\Models\ExtraInfo', 'info_form_id', 'id');
+        $this->hasMany('OmgGame\Models\ExtraInfo', 'key', 'key');
     }
 }

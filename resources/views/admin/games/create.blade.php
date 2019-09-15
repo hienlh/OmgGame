@@ -55,6 +55,20 @@
             </div>
 
             <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="info_forms">
+                    {{ __('views.admin.info_forms') }}
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <select id="info_forms" name="info_forms[]" class="select2" multiple="multiple"
+                            style="width: 100%" autocomplete="off">
+                        @foreach($info_forms as $form)
+                            <option value="{{ $form->key }}">{{ $form->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="image">
                     {{ __('views.admin.games.create.image') }}
                     <span class="required">*</span>
