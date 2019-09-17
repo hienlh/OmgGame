@@ -7,6 +7,7 @@ use DateTime;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
 use OmgGame\Models\ExtraInfo;
 use OmgGame\Models\Game;
@@ -26,6 +27,29 @@ class ApiController extends Controller
             ->where('user_id', $user_id)
             ->where('is_active', 1)
             ->where('delete_at', null);
+    }
+
+    public function updateExtraInfo(Request $request)
+    {
+        $game_user = $this->saveUserInfo($request);
+        if ($game_user == null) return response()->json('Missing info: id, name or avatar', 403);
+
+        $info_forms = [];
+
+        foreach (InfoForm::all() as $info_form) {
+            $info_forms[$info_form->key] = 1;
+        }
+
+        foreach ($request->input() as $key => $data) {
+            if (isset($info_forms[$key])) {
+                DB::table('extra_infos')
+                    ->updateOrInsert(
+                        ['game_user_id' => $request->input('id'), 'key' => $key],
+                        ['value' => $data]
+                    );
+            }
+        }
+        return response()->json('Update extra info success', 200);
     }
 
     public function getGamesWithUser(Request $request, $user_id)
@@ -82,12 +106,12 @@ class ApiController extends Controller
                     }
                 }
                 // Comment because php can compare 2 string like number if those string can convert to number, we don't need to convert as well
-//                else if (is_numeric($extra_infos[$condition->key]) && is_numeric($condition->condition)) {
-//                    if (!Operator::handle($extra_infos[$condition->key] + 0, $condition->condition + 0, $condition->operator)) {
-//                        $correct_condition = false;
-//                        break;
-//                    }
-//                }
+                //                else if (is_numeric($extra_infos[$condition->key]) && is_numeric($condition->condition)) {
+                //                    if (!Operator::handle($extra_infos[$condition->key] + 0, $condition->condition + 0, $condition->operator)) {
+                //                        $correct_condition = false;
+                //                        break;
+                //                    }
+                //                }
                 else if (!Operator::handle($extra_infos[$condition->key], $condition->condition, $condition->operator)) {
                     $correct_condition = false;
                     break;
@@ -143,34 +167,25 @@ class ApiController extends Controller
     protected function saveUserInfo(Request $request)
     {
         if (isset($request->id) && isset($request->name) && isset($request->avatar)) {
-            $game_user = GameUser::find($request->id);
-            if (!isset($game_user)) {
-                $game_user = new GameUser();
-                $game_user->id = $request->id;
-            }
-            $game_user->name = $request->name;
-            $game_user->avatar = $request->avatar;
-            $game_user->last_play = Carbon::now();
-            $game_user->save();
+            DB::table('game_users')
+                ->updateOrInsert(
+                    ['id' => $request->id],
+                    ['name' => $request->name, 'avatar' => $request->avatar, 'last_play' => Carbon::now()]
+                );
+            return GameUser::find($request->id);
         }
+        return null;
     }
 
     protected function saveUserPlayGame(Request $request, $game_id)
     {
         if (isset($request->id) && isset($request->name) && isset($request->avatar)) {
-            $game_user = GameUser::find($request->id);
-            if (!isset($game_user)) {
-                $game_user = new GameUser();
-                $game_user->id = $request->id;
-            }
-            $game_user->name = $request->name;
-            $game_user->avatar = $request->avatar;
-            $game_user->last_play = Carbon::now();
-            $game_user->save();
-            $game_user = GameUser::find($request->id);
+            $game_user = $this->saveUserInfo($request);
             if (!$game_user->games->contains($game_id))
                 $game_user->games()->attach($game_id);
+            return $game_user;
         }
+        return null;
     }
 
     public function test($game_id)
