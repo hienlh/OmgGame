@@ -58,6 +58,12 @@ class ApiController extends Controller
         foreach (ExtraInfo::all()->where('game_user_id', $request->id) as $info) {
             $extra_infos[$info->key] = $info->value;
         }
+
+        foreach (Game::findOrFail($game_id)->info_forms as $info_form) {
+            if (!isset($extra_infos[$info_form->key]))
+                return response()->json("Missing info \"" . $info_form->name . "\"", 403);
+        }
+
         $random_list = [];
         $results = GameResult::all()
             ->where('game_id', $game_id)
@@ -74,7 +80,8 @@ class ApiController extends Controller
                         $correct_condition = false;
                         break;
                     }
-                } // Comment because php can compare 2 string like number if those string can convert to number, we don't need to convert as well
+                }
+                // Comment because php can compare 2 string like number if those string can convert to number, we don't need to convert as well
 //                else if (is_numeric($extra_infos[$condition->key]) && is_numeric($condition->condition)) {
 //                    if (!Operator::handle($extra_infos[$condition->key] + 0, $condition->condition + 0, $condition->operator)) {
 //                        $correct_condition = false;
@@ -118,7 +125,19 @@ class ApiController extends Controller
     public function getInfoForms(Request $request, $game_id)
     {
         $this->saveUserPlayGame($request, $game_id);
-        return Game::findOrFail($game_id)->info_forms;
+
+        $extra_infos = [];
+        foreach (ExtraInfo::all()->where('game_user_id', $request->id) as $info) {
+            $extra_infos[$info->key] = $info->value;
+        }
+
+        $result = [];
+        foreach (Game::findOrFail($game_id)->info_forms as $info_form) {
+            if (!isset($extra_infos[$info_form->key]))
+                array_push($result, $info_form);
+        }
+
+        return $result;
     }
 
     protected function saveUserInfo(Request $request)
@@ -154,9 +173,8 @@ class ApiController extends Controller
         }
     }
 
-    public function test()
+    public function test($game_id)
     {
-        $image = Image::make('admin/images/img.jpg')->resize(300, 200);
-        return $image->response();
+        return Game::findOrFail($game_id)->info_forms;
     }
 }

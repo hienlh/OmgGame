@@ -24,4 +24,4 @@ Route::post('/users/{user_id}/games', 'ApiController@getGamesWithUser');
 Route::get('/games/{game_id}/results', 'ApiController@getResults');
 Route::post('/games/{game_id}/result', 'ApiController@getResult');
 Route::post('/games/{game_id}/info_forms', 'ApiController@getInfoForms');
-Route::get('/test', 'ApiController@test');
+Route::get('/test/{game_id}', 'ApiController@test');
