@@ -97,6 +97,10 @@ class ApiController extends Controller
             $conditions = $result->conditions;
             $correct_condition = true;
             foreach ($conditions as $condition) {
+                if(!isset($extra_infos[$condition->key])) {
+                    $correct_condition = false;
+                    break;
+                }
                 $date1 = DateTime::createFromFormat('d/m/Y', $extra_infos[$condition->key]);
                 $date2 = DateTime::createFromFormat('d/m/Y', $condition->condition);
                 if ($condition->info_form->type == InfoFormType::$datePicker && $date1 && $date2) {
