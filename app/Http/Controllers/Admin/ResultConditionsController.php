@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
 use OmgGame\Http\Controllers\Controller;
 use OmgGame\Models\GameResult;
+use OmgGame\Models\Game;
 use OmgGame\Models\InfoForm;
 use OmgGame\Models\Operator;
 use OmgGame\Models\ResultCondition;
@@ -42,7 +43,7 @@ class ResultConditionsController extends Controller
     public function create($result_id)
     {
         $result = GameResult::findOrFail($result_id);
-        $forms = InfoForm::all();
+        $forms = Game::findOrFail($result->game_id)->info_forms;
         $operators = Operator::getAll();
 
         $params = [
@@ -122,7 +123,7 @@ class ResultConditionsController extends Controller
     {
         $result = GameResult::findOrFail($result_id);
         $condition = ResultCondition::findOrFail($id);
-        $forms = InfoForm::all();
+        $forms = Game::findOrFail($result->game_id)->info_forms;
         $operators = Operator::getAll();
 
         $params = [
