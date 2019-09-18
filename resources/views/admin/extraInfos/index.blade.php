@@ -23,7 +23,7 @@
                     <td>{{ $info->description }}</td>
                     <td>{{ $info->value }}</td>
                     <td>
-                        <a href="{{ route('admin.extraInfos.show', [$game_user->id, $info->id]) }}"
+                        <a href="{{ route('admin.extraInfos.show', [$game_user->id, $info->key]) }}"
                            class="btn btn-xs btn-danger user_destroy" data-toggle="tooltip" data-placement="top"
                            data-title="{{ __('views.admin.extraInfos.index.delete') }}">
                             <i class="fa fa-trash"></i>

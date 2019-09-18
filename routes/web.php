@@ -63,7 +63,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth', 'na
 
     // Extra info
     Route::get('/game_users/{game_user_id}/extra_infos', 'ExtraInfosController@index')->name('extraInfos.index');
-    Route::get('/game_users/{game_user_id}/extra_infos/{id}', 'ExtraInfosController@show')->name('extraInfos.show');
+    Route::get('/game_users/{game_user_id}/extra_infos/{id}/show', 'ExtraInfosController@show')->name('extraInfos.show');
     Route::delete('/game_users/{game_user_id}/extra_infos/{id}', 'ExtraInfosController@destroy')->name('extraInfos.destroy');
 
     Route::get('/dashboard', 'HomeController@index')->name('dashboard');

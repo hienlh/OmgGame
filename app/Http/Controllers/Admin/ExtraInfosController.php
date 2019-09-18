@@ -4,6 +4,7 @@ namespace OmgGame\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use OmgGame\Http\Controllers\Controller;
 use OmgGame\Models\ExtraInfo;
 use OmgGame\Models\GameUser;
@@ -40,7 +41,7 @@ class ExtraInfosController extends Controller
     {
         $game_user = GameUser::find($game_user_id);
         if (!isset($game_user)) return redirect()->back()->with('flash_warning', 'User not found');
-        $info = ExtraInfo::find($id);
+        $info = ExtraInfo::where('game_user_id', $game_user_id)->where('key', $id)->first();
         if (!isset($info)) return redirect()->back()->with('flash_warning', 'Info not found');
         $params = [
             'game_user' => $game_user,
@@ -59,9 +60,9 @@ class ExtraInfosController extends Controller
     {
         $game_user = GameUser::find($game_user_id);
         if (!isset($game_user)) return redirect()->back()->with('flash_warning', 'User not found');
-        $info = ExtraInfo::find($id);
+        $info = ExtraInfo::where('game_user_id', $game_user_id)->where('key', $id)->first();
         if (!isset($info)) return redirect()->back()->with('flash_warning', 'Info not found');
-        $info->delete();
+        DB::table('extra_infos')->where('game_user_id', $game_user_id)->where('key', $id)->delete();
         return redirect()->route('admin.extraInfos.index', [$game_user_id])->withFlashSuccess("The info has successfully been archived.");
     }
 }
