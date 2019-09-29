@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
+use OmgGame\Helpers\Firebase\FirebaseHelper;
 use OmgGame\Http\Controllers\Controller;
 use OmgGame\Models\Role;
 use OmgGame\Models\User;
@@ -168,5 +169,46 @@ class UsersController extends Controller
                 return response()->view('errors.' . '404');
             }
         }
+    }
+
+    public function showBanner()
+    {
+        $user = auth()->user();
+        return view('admin.users.banner', ['user' => $user]);
+    }
+
+    public function updateBanner(Request $request)
+    {
+        $user = auth()->user();
+//        dd($request->top_banner);
+
+        $this->validate($request, [
+            'top_banner' => 'image|mimes:jpeg,png,jpg|max:2048|nullable',
+            'bottom_banner' => 'image|mimes:jpeg,png,jpg|max:2048|nullable'
+        ]);
+
+        $top_banner = $request->top_banner;
+        $old_top = $user->top_banner;
+        if($top_banner) {
+            $user->top_banner = FirebaseHelper::getInstance()->upload($top_banner, 'banners');
+            $user->save();
+            // Delete old file on firebase storage
+            if ($top_banner && $old_top && $old_top != $user->top_banner) {
+                FirebaseHelper::getInstance()->delete($old_top);
+            }
+        }
+
+        $bottom_banner = $request->bottom_banner;
+        $old_bottom = $user->bottom_banner;
+        if($bottom_banner) {
+            $user->bottom_banner = FirebaseHelper::getInstance()->upload($bottom_banner, 'banners');
+            $user->save();
+
+            if ($bottom_banner && $old_bottom && $old_bottom != $user->bottom_banner) {
+                FirebaseHelper::getInstance()->delete($old_bottom);
+            }
+        }
+
+        return redirect()->route('admin.showBanner')->withFlashSuccess("The banner updated");
     }
 }

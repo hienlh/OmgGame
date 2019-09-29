@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddValueInInfoForm extends Migration
+class CreateBannerField extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class AddValueInInfoForm extends Migration
      */
     public function up()
     {
-        Schema::table('info_forms', function (Blueprint $table) {
-            $table->longText('value')->nullable();
+        Schema::table('users', function (Blueprint $table) {
+            $table->longText('top_banner')->nullable();
+            $table->longText('bottom_banner')->nullable();
         });
     }
 
@@ -25,8 +26,9 @@ class AddValueInInfoForm extends Migration
      */
     public function down()
     {
-        Schema::table('info_forms', function (Blueprint $table) {
-            $table->dropColumn('value');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('top_banner');
+            $table->dropColumn('bottom_banner');
         });
     }
 }

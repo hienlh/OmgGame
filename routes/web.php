@@ -33,6 +33,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth', 'na
     Route::resource('games', 'GamesController');
     Route::get('all-games', 'AllGamesController@index')->name('all-games.index');
     Route::resource('users', 'UsersController')->except('create');
+    Route::get('banners', 'UsersController@showBanner')->name('showBanner');
+    Route::put('banners', 'UsersController@updateBanner')->name('updateBanner');
     Route::resource('roles', 'RolesController');
     Route::resource('permissions', 'PermissionsController');
     Route::resource('info_forms', 'InfoFormsController');

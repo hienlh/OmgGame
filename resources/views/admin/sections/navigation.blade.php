@@ -62,6 +62,12 @@
                         </a>
                     </li>
                     @endpermission
+                    <li>
+                        <a href="{{ route('admin.showBanner') }}">
+                            <i class="fa fa-gamepad" aria-hidden="true"></i>
+                            {{ __('views.backend.section.navigation.banners') }}
+                        </a>
+                    </li>
                 </ul>
             </div>
             @permission(['roles','permissions','users'])

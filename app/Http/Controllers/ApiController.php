@@ -16,6 +16,7 @@ use OmgGame\Models\GameUser;
 use OmgGame\Models\InfoForm;
 use OmgGame\Models\InfoFormType;
 use OmgGame\Models\Operator;
+use OmgGame\Models\User;
 use Psr\Http\Message\ResponseInterface;
 
 class ApiController extends Controller
@@ -190,6 +191,15 @@ class ApiController extends Controller
             return $game_user;
         }
         return null;
+    }
+
+    protected function getBanners($user_id) {
+        $user = User::findOrFail($user_id);
+
+        return [
+            "top_banner" => $user->top_banner,
+            "bottom_banner" => $user->bottom_banner,
+        ];
     }
 
     public function test($game_id)

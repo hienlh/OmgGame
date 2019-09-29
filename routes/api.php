@@ -25,4 +25,5 @@ Route::post('/extra_info', 'ApiController@updateExtraInfo');
 Route::get('/games/{game_id}/results', 'ApiController@getResults');
 Route::post('/games/{game_id}/result', 'ApiController@getResult');
 Route::post('/games/{game_id}/info_forms', 'ApiController@getInfoForms');
+Route::get('/banners/{user_id}', 'ApiController@getBanners');
 Route::get('/test/{game_id}', 'ApiController@test');
